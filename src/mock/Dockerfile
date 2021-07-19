@@ -5,10 +5,11 @@ ARG PHALCON_VERSION=4.1.0
 ARG PHALCON_EXT_PATH=php7/64bits
 ARG INSTALL_VERSION=4.0.0
 
-ARG user
-ARG uid
+ARG user=mock
+ARG uid=1000
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ${PHPIZE_DEPS} \
     git \
     curl \
     libpng-dev \
