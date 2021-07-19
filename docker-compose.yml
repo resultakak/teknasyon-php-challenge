@@ -1,17 +1,25 @@
 version: "3.9"
 
 services:
+
+  web:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
     ports:
       - "80:80"
     volumes:
       - ./src:/var/www
       - ./build/nginx:/etc/nginx/conf.d
       - ./log/nginx:/var/log/nginx
+    networks:
+      - public
     depends_on:
       - api
       - worker
     env_file:
       - .env
+    tty: true
 
 #  varnish:
 #    image: varnish
@@ -30,6 +38,10 @@ services:
 #    volumes:
 #      - ./build/varnish/default.vcl:/etc/varnish/default.vcl:ro
 #    tty: true
+
+  memcached:
+    image: memcached:latest
+
   api:
     build:
       args:
@@ -93,13 +105,21 @@ services:
     networks:
       - public
 
+  redis:
+    image: redis
     container_name: pb-redis
+    restart: always
+    hostname: redis
 #    env_file:
 #     - server/.env
 #    volumes:
 #     - application:/data/redis
     ports:
      - 6379:6379
+    networks:
+     - public
+    tty: true
+
 networks:
   public:
     driver: bridge
