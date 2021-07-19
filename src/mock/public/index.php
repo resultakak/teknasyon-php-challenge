@@ -17,7 +17,15 @@ $container = new FactoryDefault();
 $app = new Micro($container);
 
 $app->get('/', function () {
-    echo 'OK';
+    echo '🚀 OK';
+});
+
+$app->post('/api/ios/receipt/verify', function () {
+    echo 'iOS';
+});
+
+$app->post('/api/android/receipt/verify', function () {
+    echo 'Android';
 });
 
 $app->handle($_SERVER["REQUEST_URI"]);
