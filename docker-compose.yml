@@ -1,6 +1,72 @@
 version: "3.9"
 
 services:
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www
+      - ./build/nginx:/etc/nginx/conf.d
+      - ./log/nginx:/var/log/nginx
+    depends_on:
+      - api
+      - worker
+    env_file:
+      - .env
+
+#  varnish:
+#    image: varnish
+#    container_name: varnish
+#    restart: always
+#    ports:
+#      - "80:80"
+#    networks:
+#      - public
+#    environment:
+#      - VARNISH_SIZE=2G
+#    depends_on:
+#      - web
+#    links:
+#      - web
+#    volumes:
+#      - ./build/varnish/default.vcl:/etc/varnish/default.vcl:ro
+#    tty: true
+  api:
+    build:
+      args:
+        user: api
+        uid: 1000
+      dockerfile: Dockerfile
+      context: ./src/api/
+    container_name: api
+    restart: always
+    volumes:
+      - ./src/api:/var/www/api
+    healthcheck:
+      test: [ "CMD", "netstat", "-apn", "|", "grep", "9000" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    links:
+      - db
+      - memcached:memcached
+    networks:
+      - public
+    env_file:
+      - .env
+    tty: true
+
+  worker:
+    build:
+      args:
+        user: worker
+        uid: 1000
+      dockerfile: Dockerfile
+      context: ./src/worker/
+    container_name: worker
+    restart: always
+    volumes:
+      - ./src/worker:/var/www/worker
     networks:
       - public
     env_file:
@@ -27,6 +93,13 @@ services:
     networks:
       - public
 
+    container_name: pb-redis
+#    env_file:
+#     - server/.env
+#    volumes:
+#     - application:/data/redis
+    ports:
+     - 6379:6379
 networks:
   public:
     driver: bridge
