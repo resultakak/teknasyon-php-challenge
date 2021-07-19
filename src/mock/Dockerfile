@@ -59,6 +59,6 @@ RUN set -xe && \
 RUN curl -LOs https://github.com/phalcon/phalcon-devtools/releases/download/v${INSTALL_VERSION}/phalcon.phar
 RUN chmod +x phalcon.phar; mv phalcon.phar /usr/local/bin/phalcon
 
-WORKDIR /var/www/api
+WORKDIR /var/www/mock
 
 USER $user
