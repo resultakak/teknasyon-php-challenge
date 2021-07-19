@@ -24,10 +24,10 @@ $container->set(
     function () {
         return new PdoMysql(
             [
-                'host'     => $_ENV['DB_HOST'] ?? null,
-                'username' => $_ENV['DB_USERNAME'] ?? null,
-                'password' => $_ENV['DB_PASSWORD'] ?? null,
-                'dbname'   => $_ENV['DB_DATABASE'] ?? null,
+                'host'     => getenv('DB_HOST'),
+                'username' => getenv('DB_USERNAME'),
+                'password' => getenv('DB_PASSWORD'),
+                'dbname'   => getenv('DB_DATABASE'),
                 'options'  => [
                     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'",
                     PDO::ATTR_CASE               => PDO::CASE_LOWER,
@@ -41,8 +41,8 @@ $container->set(
     'session',
     function () {
         $options = [
-            'host'     => $_ENV['REDIS_HOST'] ?? null,
-            'port'     => $_ENV['REDIS_PORT'] ?? 6379,
+            'host'     => getenv('REDIS_HOST'),
+            'port'     => getenv('REDIS_PORT'),
             'index'    => '1',
             'lifetime' => 3600
         ];
@@ -68,8 +68,8 @@ $container->set(
         $options = [
             'defaultSerializer' => 'Json',
             'lifetime'          => 7200,
-            'host'              => $_ENV['REDIS_HOST'] ?? null,
-            'port'              => $_ENV['REDIS_PORT'] ?? 6379,
+            'host'              => getenv('REDIS_HOST'),
+            'port'              => getenv('REDIS_PORT'),
             'index'             => 2,
         ];
 
