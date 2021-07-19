@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+    networks:
+      - public
+    env_file:
+      - .env
+    tty: true
+
+  db:
+    image: mysql
+    container_name: db
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./build/mysql/docker:/docker-entrypoint-initdb.d
+      - ./build/mysql/data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - public
+
+networks:
+  public:
+    driver: bridge
+  private:
+    driver: bridge
