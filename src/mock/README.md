@@ -5,8 +5,9 @@
 ```
 POST /api/ios/receipt/verify HTTP/1.1
 Host: mock.local
+Authorization: Basic <USERNAME:PASSWORD>
 Content-Type: application/json
-Content-Length: 0
+Content-Length: 27
 
 {
     "receipt":"<TOKEN>"
@@ -18,8 +19,9 @@ Content-Length: 0
 ```
 POST /api/android/receipt/verify HTTP/1.1
 Host: mock.local
+Authorization: Basic <USERNAME:PASSWORD>
 Content-Type: application/json
-Content-Length: 0
+Content-Length: 27
 
 {
     "receipt":"<TOKEN>"
