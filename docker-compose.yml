@@ -68,6 +68,25 @@ services:
             - .env
         tty: true
 
+    mock:
+        build:
+            args:
+                user: mock
+                uid: 1000
+            dockerfile: Dockerfile
+            context: ./src/mock/
+        container_name: mock
+        restart: always
+        volumes:
+            - ./src/mock:/var/www/mock
+        links:
+            - memcached:memcached
+        networks:
+            - public
+        env_file:
+            - .env
+        tty: true
+
     worker:
         build:
             args:
