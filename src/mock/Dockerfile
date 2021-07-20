@@ -23,13 +23,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install \
+    bcmath \
+    ctype \
+    dom \
+    json \
+    iconv \
+    mbstring \
+    pdo \
+    pdo_mysql \
+    session \
+    simplexml \
+    xml \
+    xmlwriter
 
-RUN pecl install memcached \
-	&& docker-php-ext-enable memcached
-
-RUN pecl install redis \
-	&& docker-php-ext-enable redis
+RUN pecl install memcached xdebug redis \
+	&& docker-php-ext-enable memcached xdebug redis
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
