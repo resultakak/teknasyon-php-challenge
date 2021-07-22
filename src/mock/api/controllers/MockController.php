@@ -11,7 +11,10 @@ class MockController extends Controller
 
     public function ios()
     {
-        return '/ios/receipt/verify';
+        return $this
+            ->response
+            ->setJsonContent(['data' => ['/ios/receipt/verify']])
+            ->setStatusCode($this->response::CREATED);
     }
 
     public function android()
