@@ -31,8 +31,8 @@ class RouterProvider implements ServiceProviderInterface
         $mocks
             ->setHandler(new MockController())
             ->setPrefix('/api')
-            ->get('/ios', 'ios')
-            ->get('/android', 'android')
+            ->get('/ios/receipt/verify', 'ios')
+            ->get('/android/receipt/verify', 'android')
         ;
 
         $application->mount($mocks);
