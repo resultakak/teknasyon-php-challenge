@@ -11,10 +11,11 @@ class MockController extends Controller
 
     public function ios()
     {
-        return 'iOS!!!';
+        return '/ios/receipt/verify';
     }
+
     public function android()
     {
-        return 'Android!!!';
+        return '/android/receipt/verify';
     }
 }
