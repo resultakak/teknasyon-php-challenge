@@ -9,8 +9,8 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
-use function Phalcon\Api\Core\appPath;
-use function Phalcon\Api\Core\envValue;
+use function App\Core\appPath;
+use function App\Core\envValue;
 
 class LoggerProvider implements ServiceProviderInterface
 {
