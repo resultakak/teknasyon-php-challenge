@@ -1,14 +1,14 @@
-//use Phalcon\Api\Providers\CacheDataProvider;
-//use Phalcon\Api\Providers\ConfigProvider;
-//use Phalcon\Api\Providers\DatabaseProvider;
-//use Phalcon\Api\Providers\ErrorHandlerProvider;
-//use Phalcon\Api\Providers\LoggerProvider;
-//use Phalcon\Api\Providers\ModelsMetadataProvider;
-//use Phalcon\Api\Providers\RequestProvider;
-//use Phalcon\Api\Providers\ResponseProvider;
-//    ConfigProvider::class,
-//    LoggerProvider::class,
-//    ModelsMetadataProvider::class,
-//    RequestProvider::class,
-//    ResponseProvider::class,
-//    CacheDataProvider::class,
+<?php
+
+declare(strict_types=1);
+
+use App\Providers\CacheDataProvider;
+use App\Providers\DatabaseProvider;
+use App\Providers\SessionProvider;
+
+return [
+    DatabaseProvider::class,
+    RouterProvider::class,
+    CacheDataProvider::class,
+    SessionProvider::class,
+];
