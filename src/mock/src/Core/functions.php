@@ -10,3 +10,22 @@ if (true !== function_exists('App\Core\appPath')) {
         return dirname(dirname(__DIR__)) . ($path ? DIRECTORY_SEPARATOR . $path : $path);
     }
 }
+
+if (true !== function_exists('App\Core\envValue')) {
+    function envValue(string $variable, $default = null)
+    {
+        $return = $default;
+        $value  = getenv($variable);
+        $values = [
+            'false' => false,
+            'true'  => true,
+            'null'  => null,
+        ];
+
+        if (false !== $value) {
+            $return = $values[$value] ?? $value;
+        }
+
+        return $return;
+    }
+}
