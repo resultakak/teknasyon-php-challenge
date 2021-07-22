@@ -4,28 +4,20 @@ declare(strict_types=1);
 
 error_reporting(E_ALL);
 
-use Phalcon\Di\FactoryDefault;
-use Phalcon\Http\Response;
-use Phalcon\Mvc\Micro;
+use App\Bootstrap\Api;
+use Phalcon\Mvc\Micro\Exception;
 
 define('BASE_PATH', dirname(__DIR__));
 
-require_once BASE_PATH . '/vendor/autoload.php';
+try {
+    require_once __DIR__ . '/../src/Core/autoload.php';
 
-$container = new FactoryDefault();
+    $app = new Api();
 
-$app = new Micro($container);
+    $app->setup();
 
-$app->get('/', function () {
-    echo '🚀 OK';
-});
+    $app->run();
 
-$app->post('/api/ios/receipt/verify', function () {
-    echo 'iOS';
-});
-
-$app->post('/api/android/receipt/verify', function () {
-    echo 'Android';
-});
-
-$app->handle($_SERVER["REQUEST_URI"]);
+} catch (Exception $ex) {
+    echo $ex->getMessage();
+}
