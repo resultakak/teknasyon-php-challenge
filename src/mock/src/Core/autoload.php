@@ -10,7 +10,7 @@ require __DIR__.'/functions.php';
 
 $loader = new Loader;
 $namespaces = [
-    'App\Api\Controllers' => appPath('/api/controllers'),
+    //'App\Api\Controllers' => appPath('/api/controllers'),
 ];
 
 $loader->registerNamespaces($namespaces);
