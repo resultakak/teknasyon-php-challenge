@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
-use App\Constants\Messages;
+use App\Traits\ResponseTrait;
 use Phalcon\Di\Injectable;
 use Phalcon\Mvc\Micro;
 use Phalcon\Mvc\Micro\MiddlewareInterface;
 
 class NotFoundMiddleware extends Injectable implements MiddlewareInterface
 {
+    use ResponseTrait;
 
     public function beforeNotFound()
     {
-        $this->application
-            ->response
-            ->setStatusCode(404, Messages::NOT_FOUND)
-            ->sendHeaders()
-            ->setContent(Messages::NOT_FOUND)
-            ->send();
+        $this->halt(
+            $this->application,
+            $this->response::NOT_FOUND,
+            $this->response->getHttpCodeDescription($this->response::NOT_FOUND)
+        );
 
         return false;
     }
 
-    public function call(Micro $api)
+    public function call(Micro $mock)
     {
         return true;
     }
