@@ -17,7 +17,7 @@ class SessionProvider implements ServiceProviderInterface
 
     public function register(DiInterface $container): void
     {
-        $container->set(
+        $container->setShared(
             'session',
             function () {
                 $options = [
