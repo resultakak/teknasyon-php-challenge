@@ -22,11 +22,7 @@ class DatabaseProvider implements ServiceProviderInterface
                     'host'     => getenv('DB_HOST'),
                     'username' => getenv('DB_USERNAME'),
                     'password' => getenv('DB_PASSWORD'),
-                    'dbname'   => getenv('DB_DATABASE'),
-                    'options'  => [
-                        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'",
-                        PDO::ATTR_CASE               => PDO::CASE_LOWER,
-                    ]
+                    'dbname'   => getenv('DB_DATABASE')
                 ];
 
                 $connection = new Mysql($options);
