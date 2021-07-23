@@ -16,7 +16,7 @@ use App\Providers\ReceiptProvider;
 return [
     ConfigProvider::class,
     LoggerProvider::class,
-    //ErrorHandlerProvider::class,
+    ErrorHandlerProvider::class,
     DatabaseProvider::class,
     RequestProvider::class,
     ResponseProvider::class,
