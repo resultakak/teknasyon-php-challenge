@@ -27,7 +27,7 @@ class LoggerProvider implements ServiceProviderInterface
                 /** @var string $logName */
                 $logName   = envValue('LOGGER_DEFAULT_FILENAME', 'api.log');
                 /** @var string $logPath */
-                $logPath   = envValue('LOGGER_DEFAULT_PATH', 'storage/logs');
+                $logPath   = envValue('LOGGER_DEFAULT_PATH', 'logs');
                 $logFile   = appPath($logPath) . '/' . $logName . '.log';
                 $formatter = new LineFormatter("[%datetime%][%level_name%] %message%\n");
                 $logger    = new Logger('api-logger');
