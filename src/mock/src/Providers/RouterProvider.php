@@ -53,9 +53,9 @@ class RouterProvider implements ServiceProviderInterface
     private function getMiddleware(): array
     {
         return [
-            NotFoundMiddleware::class => 'before',
-            AuthenticationMiddleware::class => 'after',
-            ResponseMiddleware::class => 'after',
+            NotFoundMiddleware::class       => 'before',
+            AuthenticationMiddleware::class => 'before',
+            ResponseMiddleware::class       => 'after',
         ];
     }
 }
