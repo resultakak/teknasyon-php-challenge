@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Api\Controllers;
 
@@ -11,14 +11,30 @@ class MockController extends Controller
 
     public function ios()
     {
-        return $this
-            ->response
-            ->setJsonContent(['data' => ['/ios/receipt/verify']])
-            ->setStatusCode($this->response::CREATED);
+        $this->_handle();
     }
 
     public function android()
     {
-        return '/android/receipt/verify';
+        $this->_handle();
+    }
+
+    protected function _handle()
+    {
+        $receipt = $this->request->getReceiptHash();
+
+        $receipt = $this->receipt->validation($receipt);
+
+        if (!isset($receipt) || empty($receipt)) {
+            return $this->response
+                ->setPayloadError('Invalid Receipt Token')
+                ->setStatusCode($this->response::BAD_REQUEST);
+        }
+
+        $data = ['receipt' => $receipt];
+
+        return $this->response
+            ->setPayloadSuccess(['data' => $data])
+            ->setStatusCode($this->response::OK);
     }
 }
