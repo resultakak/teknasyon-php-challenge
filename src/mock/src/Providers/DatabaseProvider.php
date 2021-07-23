@@ -15,15 +15,12 @@ class DatabaseProvider implements ServiceProviderInterface
      */
     public function register(DiInterface $container): void
     {
+        $config = $container->getShared('config');
+
         $container->setShared(
             'db',
-            function () {
-                $options = [
-                    'host'     => getenv('DB_HOST'),
-                    'username' => getenv('DB_USERNAME'),
-                    'password' => getenv('DB_PASSWORD'),
-                    'dbname'   => getenv('DB_DATABASE')
-                ];
+            function () use ($config) {
+                $options = $config->get('db')->toArray();
 
                 $connection = new Mysql($options);
 
