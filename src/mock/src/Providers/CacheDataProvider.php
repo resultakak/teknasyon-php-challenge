@@ -17,18 +17,14 @@ class CacheDataProvider implements ServiceProviderInterface
 
     public function register(DiInterface $container): void
     {
+        $config = $container->getShared('config');
+
         $container->setShared(
             'cache',
-            function () {
-                $serializerFactory = new SerializerFactory();
+            function () use ($config) {
+                $options = $config->get('cache')->toArray();
 
-                $options = [
-                    'defaultSerializer' => 'Json',
-                    'lifetime'          => 7200,
-                    'host'              => \getenv('REDIS_HOST'),
-                    'port'              => \getenv('REDIS_PORT'),
-                    'index'             => 1,
-                ];
+                $serializerFactory = new SerializerFactory();
 
                 $adapter = new Redis($serializerFactory, $options);
 
