@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Api\Controllers\MockController;
+use App\Middleware\AuthenticationMiddleware;
 use App\Middleware\NotFoundMiddleware;
+use App\Middleware\ResponseMiddleware;
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Events\Manager;
@@ -52,6 +54,8 @@ class RouterProvider implements ServiceProviderInterface
     {
         return [
             NotFoundMiddleware::class => 'before',
+            AuthenticationMiddleware::class => 'after',
+            ResponseMiddleware::class => 'after',
         ];
     }
 }
