@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Api\Controllers\MockController;
+use App\Controllers\MockController;
 use App\Middleware\AuthenticationMiddleware;
 use App\Middleware\NotFoundMiddleware;
 use App\Middleware\ResponseMiddleware;
