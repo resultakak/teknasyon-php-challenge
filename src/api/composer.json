@@ -17,10 +17,7 @@
     "autoload": {
         "psr-4": {
             "Api\\": "src/"
-        },
-        "files": [
-            "src/Helpers.php"
-        ]
+        }
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
