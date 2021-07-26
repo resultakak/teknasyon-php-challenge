@@ -13,7 +13,10 @@ class NotFoundMiddleware extends Injectable implements MiddlewareInterface
 {
     use ResponseTrait;
 
-    public function beforeNotFound()
+    /**
+     * @return bool
+     */
+    public function beforeNotFound(): bool
     {
         $this->halt(
             $this->application,
@@ -24,7 +27,11 @@ class NotFoundMiddleware extends Injectable implements MiddlewareInterface
         return false;
     }
 
-    public function call(Micro $mock)
+    /**
+     * @param Micro $api
+     * @return bool
+     */
+    public function call(Micro $api): bool
     {
         return true;
     }
