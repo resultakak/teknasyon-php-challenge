@@ -21,6 +21,9 @@ mysql:
 redis-monitor:
 	docker-compose exec redis redis-cli monitor
 
+api-bash:
+	docker-compose exec api bash
+
 remove: stop
 	rm -rf ./build/mysql/data \
         ./build/mysql/docker \
