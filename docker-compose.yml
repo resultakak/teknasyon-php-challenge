@@ -41,6 +41,8 @@ services:
 
     memcached:
         image: memcached:latest
+        ports:
+            - "11211:11211"
 
     api:
         build:
@@ -70,9 +72,6 @@ services:
 
     mock:
         build:
-            args:
-                user: mock
-                uid: 1000
             dockerfile: Dockerfile
             context: ./src/mock/
         container_name: mock
@@ -126,7 +125,7 @@ services:
 
     redis:
         image: redis
-        container_name: pb-redis
+        container_name: redis
         restart: always
         hostname: redis
         #    env_file:
