@@ -46,9 +46,6 @@ services:
 
     api:
         build:
-            args:
-                user: api
-                uid: 1000
             dockerfile: Dockerfile
             context: ./src/api/
         container_name: api
