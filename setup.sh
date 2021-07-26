@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cp example.env .env
 docker-compose up -d --build
 docker-compose exec api composer install;
 docker-compose exec worker composer install;
