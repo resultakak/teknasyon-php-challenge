@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 use function App\Core\envValue;
 
@@ -22,11 +22,11 @@ return [
         'dbname'   => getenv('DB_DATABASE')
     ],
     'cache' => [
-        'uniqueId'          => 'mock_cache',
+        'prefix'            => 'mock_',
         'defaultSerializer' => 'Json',
         'lifetime'          => 7200,
         'host'              => getenv('REDIS_HOST'),
         'port'              => getenv('REDIS_PORT'),
-        'index'             => 1,
+        'index'             => 2,
     ],
 ];
