@@ -61,15 +61,15 @@ class Response extends PhResponse
 
         $content = json_decode($this->getContent(), true);
         $jsonapi = [
-            'jsonapi' => [
-                'version' => '1.0',
-            ],
+//            'jsonapi' => [
+//                'version' => '1.0',
+//            ],
         ];
         $meta    = [
-            'meta' => [
-                'timestamp' => $timestamp,
-                'hash'      => $hash,
-            ]
+//            'meta' => [
+//                'timestamp' => $timestamp,
+//                'hash'      => $hash,
+//            ]
         ];
 
         $data = $jsonapi + $content + $meta;
