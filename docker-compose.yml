@@ -14,8 +14,13 @@ services:
             - ./log/nginx:/var/log/nginx
         networks:
             - public
+        links:
+            - api
+            - mock
+            - worker
         depends_on:
             - api
+            - mock
             - worker
         env_file:
             - .env
@@ -52,12 +57,6 @@ services:
         restart: always
         volumes:
             - ./src/api:/var/www/api
-        healthcheck:
-            test: [ "CMD", "netstat", "-apn", "|", "grep", "9000" ]
-            interval: 1m30s
-            timeout: 10s
-            retries: 3
-            start_period: 40s
         links:
             - db
             - memcached:memcached
