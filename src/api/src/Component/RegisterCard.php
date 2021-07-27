@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Api\Component;
 use Api\Traits\SerializeTrait;
 
-class RegisterCard implements \JsonSerializable
+class RegisterCard implements \JsonSerializable, CardInterface
 {
     use SerializeTrait;
 
