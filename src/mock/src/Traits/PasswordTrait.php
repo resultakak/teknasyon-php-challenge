@@ -6,16 +6,36 @@ namespace App\Traits;
 
 trait PasswordTrait
 {
-    protected function generate($password)
+
+    /**
+     * @param string $password
+     * @return string
+     */
+    protected function hashing(string $password): string
     {
-        return password_hash($password, PASSWORD_DEFAULT);
+        return sha1(getenv('APP_KEY').$password);
     }
 
-    protected function verify($password, $hashed_password)
+    /**
+     * @param string $password
+     * @return string
+     */
+    protected function generate(string $password): string
     {
-        if(password_verify($password, $hashed_password)) {
+        return password_hash($this->hashing($password), PASSWORD_DEFAULT);
+    }
+
+    /**
+     * @param string $password
+     * @param string $hashed_password
+     * @return bool
+     */
+    protected function verify(string $password, string $hashed_password): bool
+    {
+        if(password_verify($this->hashing($password), $hashed_password)) {
             return true;
         }
+
         return false;
     }
 }
