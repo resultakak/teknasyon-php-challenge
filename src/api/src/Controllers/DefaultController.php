@@ -9,8 +9,10 @@ use Phalcon\Mvc\Controller;
 
 class DefaultController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
-        return "🚀 &nbsp; OK";
+        return $this->response
+            ->setPayloadSuccess(['data' => "🚀 OK"])
+            ->setStatusCode($this->response::OK);
     }
 }
