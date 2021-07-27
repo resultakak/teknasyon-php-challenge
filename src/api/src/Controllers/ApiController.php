@@ -8,7 +8,7 @@ use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
 use Api\Models\Devices;
 use Api\Traits\ResponseTrait;
-use Api\Exception\HttpException;
+use Phalcon\Exception as HttpException;
 
 class ApiController extends AbstractController
 {
