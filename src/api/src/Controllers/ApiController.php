@@ -17,8 +17,6 @@ class ApiController extends AbstractController
     public function register()
     {
         try {
-            throw new HttpException("Bad Request Test", $this->response::BAD_REQUEST);
-
             $postData = $this->request->getJsonRawBody();
 
             $card = new RegisterCard([
@@ -81,6 +79,12 @@ class ApiController extends AbstractController
     public function purchase()
     {
         try {
+            $token = $this->request->getBearerTokenFromHeader();
+
+            if (! isset($token) || empty($token)) {
+                throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
+            }
+
             $postData = $this->request->getJsonRawBody();
 
             $card = new PurchaseCard([
@@ -103,6 +107,10 @@ class ApiController extends AbstractController
     {
         try {
             $token = $this->request->getBearerTokenFromHeader();
+
+            if (! isset($token) || empty($token)) {
+                throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
+            }
 
             return $this->response
                 ->setPayloadSuccess(['data' => $token])
