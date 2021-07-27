@@ -4,10 +4,16 @@ declare(strict_types = 1);
 
 namespace App\Controllers;
 
+use App\Traits\ResponseTrait;
+use DateTime;
+use DateTimeZone;
+use Phalcon\Exception as HttpException;
 use Phalcon\Mvc\Controller;
 
 class MockController extends Controller
 {
+
+    use ResponseTrait;
 
     public function ios()
     {
@@ -21,20 +27,44 @@ class MockController extends Controller
 
     protected function _handle()
     {
-        $receipt = $this->request->getReceiptHash();
+        try {
+            $receipt = $this->request->getReceiptHash();
 
-        $receipt = $this->receipt->validation($receipt);
+            $receipt = $this->receipt->validation($receipt);
 
-        if (!isset($receipt) || empty($receipt)) {
+            if (!isset($receipt) || empty($receipt)) {
+                return $this->response
+                    ->setPayloadError('Invalid Receipt Token')
+                    ->setStatusCode($this->response::BAD_REQUEST);
+            }
+
+            $last_char = (int) substr($receipt , -1);
+
+            if(($last_char % 2) == 0) {
+                $code = $this->response::ACCEPTED;
+                $data = [
+                    'status'      => false,
+                    'receipt'     => $receipt
+                ];
+            } else {
+                $code = $this->response::OK;
+                $date = new DateTime("+1 days", new DateTimeZone("-6"));
+                $data = [
+                    'status'      => true,
+                    'receipt'     => $receipt,
+                    'expire_date' => $date->format('Y-m-d H:i:s UTC -6'),
+                ];
+            }
+
             return $this->response
-                ->setPayloadError('Invalid Receipt Token')
-                ->setStatusCode($this->response::BAD_REQUEST);
+                ->setPayloadSuccess(['data' => $data])
+                ->setStatusCode($code);
+        } catch (HttpException $ex) {
+            $this->halt(
+                $this->application,
+                $ex->getCode(),
+                $ex->getMessage()
+            );
         }
-
-        $data = ['receipt' => $receipt];
-
-        return $this->response
-            ->setPayloadSuccess(['data' => $data])
-            ->setStatusCode($this->response::OK);
     }
 }
