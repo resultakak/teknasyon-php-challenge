@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace Api\Controllers;
 
+use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
-use Api\Constants\Filters;
 use Api\Http\Response;
 use Api\Models\Devices;
 use Api\Traits\ResponseTrait;
-use Phalcon\Filter;
-use Phalcon\Filter\FilterFactory;
-use Phalcon\Mvc\Controller;
 
-class ApiController extends Controller
+class ApiController extends AbstractController
 {
     use ResponseTrait;
 
@@ -22,10 +19,10 @@ class ApiController extends Controller
         $postData = $this->request->getJsonRawBody();
 
         $card = new RegisterCard([
-            'uid'      => $this->filter->sanitize(trim($postData->uid), Filters::FILTER_STRING),
-            'app_id'   => $this->filter->sanitize(trim($postData->app_id), Filters::FILTER_STRING),
-            'language' => $this->filter->sanitize(trim($postData->language), Filters::FILTER_STRING),
-            'os'       => $this->filter->sanitize(trim($postData->os), Filters::FILTER_STRING),
+            'uid'      => $this->clean($postData->uid),
+            'app_id'   => $this->clean($postData->app_id),
+            'language' => $this->clean($postData->language),
+            'os'       => $this->clean($postData->os),
         ]);
 
         $cache_id = 'token_'.md5($card->getToken());
@@ -33,6 +30,11 @@ class ApiController extends Controller
         $token = $this->cache->get($cache_id);
 
         if (empty($token)) {
+
+            /*
+             * @TODO APP listesi oluşturulacak
+             */
+
             $device = Devices::findFirst(
                 [
                     'conditions' => 'uid = :uid: AND app_id = :app_id:',
@@ -73,8 +75,14 @@ class ApiController extends Controller
 
     public function purchase(): Response
     {
+        $postData = $this->request->getJsonRawBody();
+
+        $card = new PurchaseCard([
+            'receipt' => $this->clean($postData->receipt),
+        ]);
+
         return $this->response
-            ->setPayloadSuccess(['data' => 'purchase'])
+            ->setPayloadSuccess(['data' => $card])
             ->setStatusCode($this->response::OK);
     }
 
