@@ -6,6 +6,7 @@ namespace App\Middleware;
 
 use App\Http\Request;
 use App\Http\Response;
+use App\Models\User;
 use App\Traits\PasswordTrait;
 use App\Traits\QueryTrait;
 use App\Traits\ResponseTrait;
@@ -20,13 +21,16 @@ class AuthenticationMiddleware implements MiddlewareInterface
 
     public function call(Micro $mock)
     {
+        /** @var Request $request */
         $request  = $mock->getService('request');
+        /** @var Response $response */
         $response = $mock->getService('response');
 
         $userName = $request->getServer('PHP_AUTH_USER');
         $password = $request->getServer('PHP_AUTH_PW');
 
         if(true === isset($userName)) {
+            /** @var User $user */
             $user = $this->findUserByUsername($userName);
 
             if(true === isset($password) && true === isset($user->password) && true === $this->verify($password, $user->password)) {
@@ -39,7 +43,5 @@ class AuthenticationMiddleware implements MiddlewareInterface
             $response::UNAUTHORIZED,
             'Invalid Token'
         );
-
-        return false;
     }
 }
