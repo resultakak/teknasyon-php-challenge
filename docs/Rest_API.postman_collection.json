@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "3361ecaf-db8d-4fd6-8c3c-c976455aca38",
-		"name": "Rest API",
+		"name": "Management API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -24,6 +24,19 @@
 		},
 		{
 			"name": "register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var resp = pm.response.json();",
+							"pm.collectionVariables.set(\"token\", resp.data.token);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -32,7 +45,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"uid\": \"<UID>\",\n    \"app_id\": \"<APPID>\",\n    \"language\":\"<LANG>\",\n    \"os\": \"<IOS|ANDROID>\"\n}",
+					"raw": "{\n    \"uid\": \"{{uid}}\",\n    \"app_id\": \"{{app_id}}\",\n    \"language\":\"{{language}}\",\n    \"os\": \"{{os}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -54,21 +67,11 @@
 		{
 			"name": "purchase",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "<TOKEN>",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"receipt\": \"<RECEIPT>\"\n}",
+					"raw": "{\n    \"receipt\": \"{{receipt}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -115,6 +118,16 @@
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -139,6 +152,30 @@
 		{
 			"key": "url",
 			"value": "http://api.local/"
+		},
+		{
+			"key": "uid",
+			"value": "uid_329549a84f8a081f21acc3abc231821b1"
+		},
+		{
+			"key": "app_id",
+			"value": "app_id_329549a84f8a081f21acc3abc231821b1"
+		},
+		{
+			"key": "language",
+			"value": "en"
+		},
+		{
+			"key": "os",
+			"value": "iOS"
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "receipt",
+			"value": "a84f8a21acc3abc08a84f8a08"
 		}
 	]
 }
