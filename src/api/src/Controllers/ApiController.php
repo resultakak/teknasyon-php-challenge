@@ -6,7 +6,6 @@ namespace Api\Controllers;
 
 use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
-use Api\Http\Response;
 use Api\Models\Devices;
 use Api\Traits\ResponseTrait;
 use Api\Exception\HttpException;
@@ -15,9 +14,11 @@ class ApiController extends AbstractController
 {
     use ResponseTrait;
 
-    public function register(): Response
+    public function register()
     {
         try {
+            throw new HttpException("Bad Request Test", $this->response::BAD_REQUEST);
+
             $postData = $this->request->getJsonRawBody();
 
             $card = new RegisterCard([
@@ -32,11 +33,6 @@ class ApiController extends AbstractController
             $token = $this->cache->get($cache_id);
 
             if (empty($token)) {
-
-                /*
-                 * @TODO APP listesi oluşturulacak
-                 */
-
                 $device = Devices::findFirst(
                     [
                         'conditions' => 'uid = :uid: AND app_id = :app_id:',
@@ -74,13 +70,15 @@ class ApiController extends AbstractController
                 ->setPayloadSuccess(['data' => ['token' => $token]])
                 ->setStatusCode($this->response::OK);
         } catch (HttpException $ex) {
-            return $this->response
-                ->setPayloadError($ex->getMessage())
-                ->setStatusCode($this->response::OK);
+            $this->halt(
+                $this->application,
+                $ex->getCode(),
+                $ex->getMessage()
+            );
         }
     }
 
-    public function purchase(): Response
+    public function purchase()
     {
         try {
             $postData = $this->request->getJsonRawBody();
@@ -93,13 +91,15 @@ class ApiController extends AbstractController
                 ->setPayloadSuccess(['data' => $card])
                 ->setStatusCode($this->response::OK);
         } catch (HttpException $ex) {
-            return $this->response
-                ->setPayloadError($ex->getMessage())
-                ->setStatusCode($this->response::OK);
+            $this->halt(
+                $this->application,
+                $ex->getCode(),
+                $ex->getMessage()
+            );
         }
     }
 
-    public function check_subscription(): Response
+    public function check_subscription()
     {
         try {
             $token = $this->request->getBearerTokenFromHeader();
@@ -108,9 +108,11 @@ class ApiController extends AbstractController
                 ->setPayloadSuccess(['data' => $token])
                 ->setStatusCode($this->response::OK);
         } catch (HttpException $ex) {
-            return $this->response
-                ->setPayloadError($ex->getMessage())
-                ->setStatusCode($this->response::OK);
+            $this->halt(
+                $this->application,
+                $ex->getCode(),
+                $ex->getMessage()
+            );
         }
     }
 }
