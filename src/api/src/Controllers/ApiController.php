@@ -89,7 +89,7 @@ class ApiController extends AbstractController
     public function check_subscription(): Response
     {
         return $this->response
-            ->setPayloadSuccess(['data' => 'check_subscription'])
+            ->setPayloadSuccess(['data' => $this->request->getBearerTokenFromHeader()])
             ->setStatusCode($this->response::OK);
     }
 }
