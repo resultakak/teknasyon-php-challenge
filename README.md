@@ -55,7 +55,7 @@ docker-compose exec worker composer install
 
 ## Links
 
-* [Mobile Application Subscription Managment API](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
+* [Mobile Application Subscription Managment API (with Test)](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
 * [Mock API](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
 
 ## Postman Collections
