@@ -16,7 +16,8 @@ final class Device extends AbstractMigration
             ->addColumn('uid', 'string', ['limit' => 60])
             ->addColumn('app_id', 'string', ['limit' => 60])
             ->addColumn('language', 'string', ['limit' => 10])
-            ->addColumn('os', 'string', ['limit' => 40])
+            ->addColumn('os', 'string', ['limit' => 30])
+            ->addColumn('token', 'string', ['limit' => 35])
             ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->create();
     }
