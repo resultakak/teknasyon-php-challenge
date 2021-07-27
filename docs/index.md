@@ -1,5 +1,3 @@
-Mobile Application Subscription Management
-===
 
 Mobile applications are able to make in-app-purchase purchases, verification and current subscription control using this API.
 
