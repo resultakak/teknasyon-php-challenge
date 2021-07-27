@@ -34,4 +34,4 @@ curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/setup
 
 ## Postman Collections
 
-* [Mock API](https://github.com/resultakak/php-challenge/blob/develop/docs/Mock_API.postman_collection.json)
+* [Mock API](Mock_API.postman_collection.json)
