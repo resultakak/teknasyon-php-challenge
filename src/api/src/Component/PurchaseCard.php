@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Api\Component;
 
-class PurchaseCard
+class PurchaseCard implements CardInterface
 {
 
     /**
