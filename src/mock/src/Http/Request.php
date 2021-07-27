@@ -11,6 +11,7 @@ class Request extends PhRequest
     public function getReceiptHash()
     {
         $data = $this->getJsonRawBody();
+
         return true == isset($data->receipt) ? $data->receipt : false;
     }
 }
