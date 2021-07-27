@@ -1,37 +1,38 @@
-## Welcome to GitHub Pages
+# php-challenge
 
-You can use the [editor on GitHub](https://github.com/resultakak/php-challenge/edit/develop/docs/index.md) to maintain and preview the content for your website in Markdown files.
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f0afcfa224d41a09047f7857af08e7e)](https://app.codacy.com/gh/resultakak/php-challenge?utm_source=github.com&utm_medium=referral&utm_content=resultakak/php-challenge&utm_campaign=Badge_Grade_Settings)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Mobile Application Subscription Management API (masma)
 
-### Markdown
+Mobile applications are able to make in-app-purchase purchases, verification and current subscription control using this API.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Prerequisites
 
-```markdown
-Syntax highlighted code block
+#### Software
 
-# Header 1
-## Header 2
-### Header 3
+* Git
+* Docker
+* Docker Compose
 
-- Bulleted
-- List
+#### Add to hosts file:
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```shell
+127.0.0.1	api.local
+127.0.0.1	mock.local
+127.0.0.1	worker.local
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Install
 
-### Jekyll Themes
+```shell
+curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/setup.sh | bash
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/resultakak/php-challenge/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Links
 
-### Support or Contact
+* [Mobile Application Subscription Managment API](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
+* [Mock API](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+### Postman Collections
+
+* [Mock API](https://github.com/resultakak/php-challenge/blob/develop/docs/Mock_API.postman_collection.json)
