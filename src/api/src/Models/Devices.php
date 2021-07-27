@@ -17,6 +17,7 @@ class Devices extends Model
     public $app_id;
     public $language;
     public $os;
+    public $token;
     public $created;
 
     public function initialize()
@@ -44,42 +45,49 @@ class Devices extends Model
             "app_id",
             "language",
             "os",
+            "token",
         ], new StringLength([
             "max"             => [
                 "uid"      => 60,
                 "app_id"   => 60,
                 "language" => 10,
-                "os"       => 40,
+                "os"       => 30,
+                "token"    => 35,
             ],
             "min"             => [
                 "uid"      => 20,
                 "app_id"   => 20,
                 "language" => 1,
                 "os"       => 3,
+                "token"    => 30,
             ],
             "messageMaximum"  => [
                 "uid"      => "Uid too long",
                 "app_id"   => "AppID too long",
                 "language" => "Language code too long",
                 "os"       => "OS name too long",
+                "token"    => "Internal Server Error",
             ],
             "messageMinimum"  => [
                 "uid"      => "Uid too short",
                 "app_id"   => "AppID too short",
                 "language" => "Language code too short",
                 "os"       => "OS name too short",
+                "token"    => "Internal Server Error",
             ],
             "includedMaximum" => [
                 "uid"      => false,
                 "app_id"   => true,
                 "language" => false,
                 "os"       => false,
+                "token"    => false,
             ],
             "includedMinimum" => [
                 "uid"      => false,
                 "app_id"   => true,
                 "language" => false,
                 "os"       => false,
+                "token"    => false,
             ]
         ]));
 
