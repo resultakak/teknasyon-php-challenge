@@ -6,6 +6,10 @@ namespace Api\Component;
 
 use Api\Traits\SerializeTrait;
 use JsonSerializable;
+use function md5;
+use function sha1;
+use function json_encode;
+use function json_decode;
 
 class RegisterCard implements JsonSerializable, CardInterface
 {
@@ -164,10 +168,13 @@ class RegisterCard implements JsonSerializable, CardInterface
      */
     public function setToken(): void
     {
-        $this->token = isset($this->uid) && !empty(isset($this->uid)) &&
-        isset($this->app_id) && !empty(isset($this->app_id))
-            ? sha1(json_encode($this))
-            : false;
+        $data = [
+            'uid'    => sha1($this->encode($this->getUid())),
+            'app_id' => sha1($this->encode($this->getAppId())),
+            'key'    => sha1(getenv('APP_KEY'))
+        ];
+
+        $this->token = md5(sha1(json_encode($data)));
     }
 
     /**
@@ -184,9 +191,9 @@ class RegisterCard implements JsonSerializable, CardInterface
     public function jsonSerialize(): array
     {
         return [
-            'uid'    => sha1($this->encode($this->getUid())),
-            'app_id' => sha1($this->encode($this->getAppId())),
-            'key'    => sha1(getenv('APP_KEY'))
+            'uid'    => $this->getUid(),
+            'app_id' => $this->getAppId(),
+            'token' => $this->getToken(),
         ];
     }
 }
