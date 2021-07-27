@@ -56,7 +56,7 @@ class Response extends PhResponse
     {
         $content   = $this->getContent();
         $timestamp = date('c');
-        $hash      = sha1($timestamp . $content);
+//        $hash      = sha1($timestamp . $content);
         $eTag      = sha1($content);
 
         $content = json_decode($this->getContent(), true);
