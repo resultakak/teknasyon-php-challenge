@@ -1,14 +1,12 @@
 theme: jekyll-theme-minimal
 locale: "en-US"
 title: "Mobile Application Subscription Management"
+author: "Resul Takak"
 avatar: "/assets/img/logo.svg"
 social-network-links:
-  github: daattali
+  github: "resultakak"
   email: "resultakak@gmail.com"
 timezone: "Europe/Istanbul"
 exclude:
   - CHANGELOG.md
 repository: "https://github.com/resultakak/php-challenge"
-author:
-  name             : "Resul Takak"
-  location         : "Istanbul"
