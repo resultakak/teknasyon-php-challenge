@@ -41,7 +41,7 @@ class RouterProvider implements ServiceProviderInterface
             ->setPrefix('/api')
             ->post('/register', 'register')
             ->post('/purchase', 'purchase')
-            ->post('/check_subscription', 'check_subscription')
+            ->get('/check_subscription', 'check_subscription')
         ;
 
         $application->mount($api);
