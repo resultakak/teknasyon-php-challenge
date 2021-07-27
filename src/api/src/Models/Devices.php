@@ -58,16 +58,16 @@ class Devices extends Model
                 "os"       => 3,
             ],
             "messageMaximum"  => [
-                "uid"      => "Uid too short",
-                "app_id"   => "AppID too short",
-                "language" => "Language code too short",
-                "os"       => "OS name too short",
-            ],
-            "messageMinimum"  => [
                 "uid"      => "Uid too long",
                 "app_id"   => "AppID too long",
                 "language" => "Language code too long",
                 "os"       => "OS name too long",
+            ],
+            "messageMinimum"  => [
+                "uid"      => "Uid too short",
+                "app_id"   => "AppID too short",
+                "language" => "Language code too short",
+                "os"       => "OS name too short",
             ],
             "includedMaximum" => [
                 "uid"      => false,
