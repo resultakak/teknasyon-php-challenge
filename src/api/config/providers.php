@@ -15,7 +15,7 @@ use Api\Providers\SessionProvider;
 return [
     ConfigProvider::class,
     LoggerProvider::class,
-    ErrorHandlerProvider::class,
+    //ErrorHandlerProvider::class,
     DatabaseProvider::class,
     RequestProvider::class,
     ResponseProvider::class,
