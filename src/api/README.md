@@ -15,3 +15,16 @@ Content-Type: application/json
     "os": "<IOS|ANDROID>"
 }
 ```
+
+**purchase**
+
+```
+POST /api/purchase HTTP/1.1
+Host: api.local
+Authorization: Bearer <TOKEN>
+Content-Type: application/json
+
+{
+    "receipt": "<RECEIPT>"
+}
+```
