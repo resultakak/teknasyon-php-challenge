@@ -48,5 +48,5 @@ docker-compose exec mock vendor/bin/phinx seed:run;
 
 ## Postman Collections
 
-* [Mobile Application Subscription Managment API](https://github.com/resultakak/php-challenge/blob/develop/docs/Rest_API.postman_collection.json)
+* [Mobile Application Subscription Managment API (with Test)](https://github.com/resultakak/php-challenge/blob/develop/docs/Rest_API.postman_collection.json)
 * [Mock API](https://github.com/resultakak/php-challenge/blob/develop/docs/Mock_API.postman_collection.json)
