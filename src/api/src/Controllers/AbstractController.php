@@ -19,7 +19,9 @@ abstract class AbstractController extends Controller
 {
 
     abstract public function register();
+
     abstract public function purchase();
+
     abstract public function check_subscription();
 
     protected function clean(string $text)
@@ -33,7 +35,6 @@ abstract class AbstractController extends Controller
 
         return $text;
     }
-
 
     protected function set_token_cache(CardInterface $card) {
         if(! $card instanceof CardInterface) {
