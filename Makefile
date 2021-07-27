@@ -24,6 +24,9 @@ redis-monitor:
 api-bash:
 	docker-compose exec api bash
 
+mock-bash:
+	docker-compose exec mock bash
+
 remove: stop
 	rm -rf ./build/mysql/data \
         ./build/mysql/docker \
@@ -31,4 +34,3 @@ remove: stop
         ./src/api/composer.lock \
         ./src/worker/vendor \
         ./src/worker/composer.lock
-
