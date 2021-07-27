@@ -7,6 +7,7 @@ namespace Api\Controllers;
 use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
 use Api\Models\Devices;
+use Api\Models\Applications;
 use Api\Traits\ResponseTrait;
 use Phalcon\Exception as HttpException;
 
@@ -26,47 +27,58 @@ class ApiController extends AbstractController
                 'os'       => $this->clean($postData->os),
             ]);
 
-            $cache_id = 'token_'.md5($card->getToken());
-
-            $token = $this->cache->get($cache_id);
-
-            if (empty($token)) {
-                $device = Devices::findFirst(
-                    [
-                        'conditions' => 'uid = :uid: AND app_id = :app_id:',
-                        'bind'       => [
-                            'uid'    => $card->getUid(),
-                            'app_id' => $card->getAppId(),
-                        ],
-                    ]
-                );
-
-                if (empty($device)) {
-                    $device = new Devices();
-                    $device->uid = $card->getUid();
-                    $device->app_id = $card->getAppId();
-                    $device->language = $card->getLanguage();
-                    $device->os = $card->getOs();
-
-                    $result = $device->save();
-
-                    if (false === $result) {
-                        $messages = $device->getMessages();
-
-                        return $this->response
-                            ->setPayloadErrors($messages)
-                            ->setStatusCode($this->response::BAD_REQUEST);
-
-                    }
-                }
-
-                $token = $card->getToken();
-                $this->cache->set($cache_id, $token);
+            if (true === $this->get_token_cache($card)) {
+                return $this->response
+                    ->setPayloadSuccess(['data' => ['token' => $this->session->get('token')]])
+                    ->setStatusCode($this->response::ACCEPTED);
             }
 
+            $app = Applications::findFirst(
+                [
+                    'conditions' => 'app_id = :app_id:',
+                    'bind'       => [
+                        'app_id' => $card->getAppId()
+                    ],
+                ]
+            );
+
+            if (! isset($app) || empty($app)) {
+                throw new HttpException("Not Found", $this->response::NOT_FOUND);
+            }
+
+            $device = Devices::findFirst(
+                [
+                    'conditions' => 'uid = :uid: AND app_id = :app_id:',
+                    'bind'       => [
+                        'uid'    => $card->getUid(),
+                        'app_id' => $app->app_id,
+                    ],
+                ]
+            );
+
+            if (! isset($device) || empty($device)) {
+                $device = new Devices();
+                $device->uid = $card->getUid();
+                $device->app_id = $app->app_id;
+                $device->language = $card->getLanguage();
+                $device->os = $card->getOs();
+                $device->token = $card->getToken();
+
+                $result = $device->save();
+
+                if (false === $result) {
+                    $messages = $device->getMessages();
+                    return $this->response
+                        ->setPayloadErrors($messages)
+                        ->setStatusCode($this->response::BAD_REQUEST);
+                }
+            }
+
+            $this->set_token_cache($card);
+
             return $this->response
-                ->setPayloadSuccess(['data' => ['token' => $token]])
-                ->setStatusCode($this->response::OK);
+                ->setPayloadSuccess(['data' => ['token' => $device->token]])
+                ->setStatusCode($this->response::CREATED);
         } catch (HttpException $ex) {
             $this->halt(
                 $this->application,
