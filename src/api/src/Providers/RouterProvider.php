@@ -28,6 +28,13 @@ class RouterProvider implements ServiceProviderInterface
 
     private function attachRoutes(Micro $application)
     {
+        $home = new Collection();
+        $home
+            ->setHandler(new DefaultController())
+            ->get('/', 'index')
+        ;
+        $application->mount($home);
+
         $api = new Collection;
         $api
             ->setHandler(new ApiController())
