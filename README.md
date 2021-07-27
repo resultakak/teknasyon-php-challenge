@@ -8,3 +8,7 @@ Mobile Application Subscription Management API (masma)
 
 * [Mobile Application Subscription Managment API](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
 * [Mock API](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
+
+## Postman Collections
+
+* [Mock API](https://github.com/resultakak/php-challenge/blob/develop/doc/Mock_API.postman_collection.json)
