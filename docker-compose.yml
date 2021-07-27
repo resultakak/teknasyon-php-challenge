@@ -133,6 +133,7 @@ services:
             - 6379:6379
         networks:
             - public
+            - private
         tty: true
 
 networks:
