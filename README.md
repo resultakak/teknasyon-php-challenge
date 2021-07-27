@@ -4,6 +4,12 @@
 
 Mobile Application Subscription Management API (masma)
 
+## Install
+
+```shell
+curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/setup.sh | bash
+```
+
 ## Links
 
 * [Mobile Application Subscription Managment API](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
