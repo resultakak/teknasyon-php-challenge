@@ -16,9 +16,9 @@ class Device extends AbstractSeed
         ];
 
         $data = [];
-        for ($i = 0; $i < 100; $i++) {
 
-            $uid = $faker->uuid;
+        for ($i = 0; $i < 100; $i++) {
+            $uid = $i === 1 ? '566dceed-f87a-3191-864e-9ab1d519300d' : $faker->uuid;
             $app_id = rand(1,3);
             $app_id = $apps[$app_id];
 
