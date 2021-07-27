@@ -6,4 +6,5 @@ Mobile Application Subscription Management API (masma)
 
 ## Links
 
+* [Mobile Application Subscription Managment API](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
 * [Mock API](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
