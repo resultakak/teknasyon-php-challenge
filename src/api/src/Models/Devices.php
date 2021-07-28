@@ -11,7 +11,6 @@ use Phalcon\Validation\Validator\StringLength;
 
 class Devices extends Model
 {
-
     public $id;
     public $uid;
     public $app_id;
