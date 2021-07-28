@@ -60,6 +60,9 @@ class ApiController extends AbstractController
                     ->setStatusCode($this->response::ACCEPTED);
             }
 
+            /**
+             * @SuppressWarnings(StaticAccess)
+             */
             $app = Applications::findFirst(
                 [
                     'conditions' => 'app_id = :app_id:',
@@ -73,6 +76,9 @@ class ApiController extends AbstractController
                 throw new HttpException("Not Found", $this->response::NOT_FOUND);
             }
 
+            /**
+             * @SuppressWarnings(PHPMD.StaticAccess)
+             */
             $device = Devices::findFirst(
                 [
                     'conditions' => 'uid = :uid: AND app_id = :app_id:',
@@ -123,7 +129,7 @@ class ApiController extends AbstractController
         try {
             $token = $this->request->getBearerTokenFromHeader();
 
-            if (! isset($token) || empty($token)) {
+            if (! is_string($token)) {
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
             }
 
@@ -173,7 +179,7 @@ class ApiController extends AbstractController
                 ]
             );
 
-            if (! isset($app) || empty($app)) {
+            if (false === $app) {
                 throw new HttpException("Not Found", $this->response::NOT_FOUND);
             }
 
