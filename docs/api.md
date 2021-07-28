@@ -57,3 +57,6 @@ Authorization: Bearer <TOKEN>
 | 500 | `INTERNAL SERVER ERROR` |
 | 501 | `NOT_IMPLEMENTED` |
 | 502 | `BAD_GATEWAY` |
+
+---
+### [Index](index)

@@ -7,9 +7,12 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 ## Documentation
 
-### API
+### General
 
 * [Install](install)
+
+### API
+
 * [Mobile Application Subscription Managment API](api)
 * [Mock API](mock)
 
