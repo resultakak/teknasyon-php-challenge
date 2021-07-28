@@ -6,7 +6,7 @@ namespace Api\Traits;
 
 trait SerializeTrait
 {
-    protected function encode(string $text)
+    protected function encode(string $text): string
     {
         return md5(strtolower(trim($text)));
     }
