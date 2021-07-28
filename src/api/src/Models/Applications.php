@@ -8,7 +8,7 @@ use Phalcon\Mvc\Model;
 
 class Applications extends Model
 {
-    public function initialize()
+    public function initialize(): void
     {
         $this->setSource('apps');
     }
