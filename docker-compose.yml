@@ -106,10 +106,6 @@ services:
         container_name: redis
         restart: always
         hostname: redis
-        #    env_file:
-        #     - server/.env
-        #    volumes:
-        #     - application:/data/redis
         ports:
             - 6379:6379
         networks:
