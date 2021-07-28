@@ -37,6 +37,9 @@ abstract class AbstractBootstrap
 
     abstract public function run();
 
+    /**
+     * @return void
+     */
     public function setup()
     {
         $this->container->set('metrics', microtime(true));
@@ -44,13 +47,13 @@ abstract class AbstractBootstrap
         $this->registerServices();
     }
 
-    protected function setupApplication()
+    protected function setupApplication(): void
     {
         $this->application = new Micro($this->container);
         $this->container->setShared('application', $this->application);
     }
 
-    private function registerServices()
+    private function registerServices(): void
     {
         /** @var ServiceProviderInterface $provider */
         foreach ($this->providers as $provider) {
