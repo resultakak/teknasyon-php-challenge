@@ -6,12 +6,11 @@ use Phalcon\Filter\FilterFactory;
 
 class Receipt
 {
-
     public $locator;
 
     public function __construct()
     {
-        $factory = new FilterFactory;
+        $factory = new FilterFactory();
         $this->locator = $factory->newInstance();
     }
 
