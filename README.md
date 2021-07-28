@@ -43,7 +43,7 @@ docker-compose exec worker make setup
 
 ## Links
 
-* [Documentation](resul.me/php-challenge/)
+* [Documentation](https://resul.me/php-challenge/)
 * [Mobile Application Subscription Managment API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
 * [Mock API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
 
