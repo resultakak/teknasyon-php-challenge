@@ -21,26 +21,15 @@ use Phalcon\Exception as HttpException;
  * Class ApiController
  *
  * @SuppressWarnings(PHPMD.StaticAccess)
+ *
+ * @property Phalcon\Mvc\Micri $application;
+ * @property Response          $response   ;
+ * @property Request           $request    ;
  */
 class ApiController extends AbstractController
 {
     use ResponseTrait;
     use CryptoTrait;
-
-    /**
-     * @var Phalcon\Mvc\Micro $application
-     */
-    private Phalcon\Mvc\Micro $application;
-
-    /**
-     * @var Request $request
-     */
-    private Request $request;
-
-    /**
-     * @var Response $response
-     */
-    private Response $response;
 
     /**
      * @return Response
