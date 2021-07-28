@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Api\Controllers;
 
+use Api\Component\CheckSubscriptionCard;
 use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
-use Api\Component\CheckSubscriptionCard;
+use Api\Http\Request;
 use Api\Http\Response;
 use Api\Mock\MockResultCard;
 use Api\Models\Applications;
@@ -22,6 +23,21 @@ class ApiController extends AbstractController
     use CryptoTrait;
 
     /**
+     * @var Phalcon\Mvc\Micro $application
+     */
+    private Phalcon\Mvc\Micro $application;
+
+    /**
+     * @var Request $request
+     */
+    private Request $request;
+
+    /**
+     * @var Response $response
+     */
+    private Response $response;
+
+    /**
      * @return Response
      */
     public function register(): Response
@@ -29,12 +45,14 @@ class ApiController extends AbstractController
         try {
             $postData = $this->request->getJsonRawBody();
 
-            $card = new RegisterCard([
-                'uid'      => $this->clean($postData->uid),
-                'app_id'   => $this->clean($postData->app_id),
-                'language' => $this->clean($postData->language),
-                'os'       => $this->clean($postData->os),
-            ]);
+            $card = new RegisterCard(
+                [
+                    'uid'      => $this->clean($postData->uid),
+                    'app_id'   => $this->clean($postData->app_id),
+                    'language' => $this->clean($postData->language),
+                    'os'       => $this->clean($postData->os),
+                ]
+            );
 
             if (true === $this->get_token_cache($card)) {
                 return $this->response
@@ -66,7 +84,7 @@ class ApiController extends AbstractController
             );
 
             if (! isset($device) || empty($device)) {
-                $device = new Devices();
+                $device = new Devices;
                 $device->uid = $card->getUid();
                 $device->app_id = $app->app_id;
                 $device->language = $card->getLanguage();
@@ -111,14 +129,19 @@ class ApiController extends AbstractController
 
             $postData = $this->request->getJsonRawBody();
 
-            $card = new PurchaseCard([
-                'receipt' => $this->clean($postData->receipt),
-            ]);
+            $card = new PurchaseCard(
+                [
+                    'receipt' => $this->clean($postData->receipt),
+                ]
+            );
 
-            $cache_id = $this->cacheManager->cache_id([
-                $token,
-                $card->getReceipt()
-            ], "purch_");
+            $cache_id = $this->cacheManager->cache_id(
+                [
+                    $token,
+                    $card->getReceipt()
+                ],
+                "purch_"
+            );
 
             $cache = $this->cacheManager->get($cache_id);
 
@@ -128,12 +151,14 @@ class ApiController extends AbstractController
                     ->setStatusCode($this->response::OK);
             }
 
-            $device = Devices::findFirst([
-                'conditions' => 'token = :token:',
-                'bind'       => [
-                    'token' => $token
+            $device = Devices::findFirst(
+                [
+                    'conditions' => 'token = :token:',
+                    'bind'       => [
+                        'token' => $token
+                    ]
                 ]
-            ]);
+            );
 
             if (empty($device->token) || empty($device->app_id)) {
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
@@ -159,12 +184,11 @@ class ApiController extends AbstractController
                 ->setUsername($app->username)
                 ->setPassword($password)
                 ->setPost(["receipt" => $card->getReceipt()])
-                ->handle()
-            ;
+                ->handle();
 
             $result = $mock->getResult();
 
-            $subscriptions = new Subscriptions();
+            $subscriptions = new Subscriptions;
 
             $subscriptions->device_id = $device->id;
             $subscriptions->receipt = $result->getReceipt();
@@ -216,9 +240,12 @@ class ApiController extends AbstractController
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
             }
 
-            $cache_id = $this->cacheManager->cache_id([
-                $token
-            ], "subs_");
+            $cache_id = $this->cacheManager->cache_id(
+                [
+                    $token
+                ],
+                "subs_"
+            );
 
             $cache = $this->cacheManager->get($cache_id);
 
@@ -228,21 +255,25 @@ class ApiController extends AbstractController
                     ->setStatusCode($this->response::OK);
             }
 
-            $device = Devices::findFirst([
-                'conditions' => 'token = :token:',
-                'bind'       => [
-                    'token' => $token
+            $device = Devices::findFirst(
+                [
+                    'conditions' => 'token = :token:',
+                    'bind'       => [
+                        'token' => $token
+                    ]
                 ]
-            ]);
+            );
 
             if (empty($device->token) || empty($device->app_id)) {
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
             }
 
-            $result = new CheckSubscriptionCard([
-                'status'      => $device->status,
-                'expire_date' => $device->expire_date
-            ]);
+            $result = new CheckSubscriptionCard(
+                [
+                    'status'      => $device->status,
+                    'expire_date' => $device->expire_date
+                ]
+            );
 
             $this->cacheManager->set($cache_id, $result);
 
