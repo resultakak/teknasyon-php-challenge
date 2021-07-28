@@ -62,11 +62,11 @@ app
 ├── logs
 ├── sql
 ├── src
-│   └── api (Phalcon)
-│   ├── mock  (Phalcon)
-│   └── worker (Laravel)
+│   └── api                 ── [Phalcon]
+│   ├── mock                ── [Phalcon]
+│   └── worker              ── [Laravel]
 ├── docker-compose.yml
-├── example.env [Example Env]
+├── example.env
 ├── install.sh
 ├── Makefile
 ├── README.md
