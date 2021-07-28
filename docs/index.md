@@ -10,6 +10,7 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 ### General
 
 * [Install](install)
+* [Folder Structure](folder)
 
 ### API
 
@@ -24,23 +25,3 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 ### SQL Structure
 
 * [SQL File](https://github.com/resultakak/php-challenge/blob/develop/sql/db.sql)
-
-### Folder Structure
-
-```
-app
-├── build
-├── docs
-├── logs
-├── sql
-├── src
-│   └── api                     ── Phalcon
-│   ├── mock                    ── Phalcon
-│   └── worker                  ── Laravel
-├── docker-compose.yml
-├── example.env
-├── install.sh
-├── Makefile
-├── README.md
-└── setup.md                    
-```
