@@ -6,48 +6,88 @@ namespace Api\Component;
 
 use JsonSerializable;
 
-class CheckSubscriptionCard implements JsonSerializable, CardInterface
+class CheckSubscriptionCard implements CardInterface, JsonSerializable
 {
+    /**
+     * @var $status
+     */
+    private $status;
 
     /**
-     * @var $token
+     * @var $expire_date
      */
-    private $token;
+    private $expire_date;
 
+    /**
+     * MockResultCard constructor.
+     *
+     * @param array|null $data
+     */
     public function __construct(array $data = null)
     {
         $data = json_decode(json_encode($data), true);
 
-        if (!isset($data) || empty($data) || !is_array($data)) {
+        if (! isset($data) || empty($data) || ! is_array($data)) {
             return;
         }
 
-        if(array_key_exists('token', $data)) {
-            $this->setToken($data['token']);
+        if (array_key_exists('status', $data)) {
+            $this->setStatus((bool) $data['status']);
+        }
+
+        if (array_key_exists('expire_date', $data)) {
+            $this->setExpireDate($data['expire_date']);
         }
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getToken(): string
+    public function getStatus(): bool
     {
-        return $this->token;
+        return $this->status ?? false;
     }
 
     /**
-     * @param string $token
+     * @param bool $status
+     * @return $this
      */
-    public function setToken(string $token): void
+    public function setStatus(bool $status): self
     {
-        $this->token = $token;
+        $this->status = $status;
+
+        return $this;
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function jsonSerialize(): array
+    public function getExpireDate()
     {
-        return [""];
+        return $this->expire_date;
+    }
+
+    /**
+     * @param $expire_date
+     * @return $this
+     */
+    public function setExpireDate($expire_date): self
+    {
+        $this->expire_date = isset($expire_date) ? date('Y-m-d H:i:s', strtotime($expire_date)) : null;
+
+        return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        $data = [
+            'status' => $this->getStatus(),
+        ];
+
+        if (true === $this->getStatus()) {
+            $data['expire_date'] = $this->getExpireDate();
+        }
+
+        return $data;
     }
 }
