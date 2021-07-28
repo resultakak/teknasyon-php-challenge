@@ -9,7 +9,7 @@ use Phalcon\Mvc\Micro;
 
 trait ResponseTrait
 {
-    protected function halt(Micro $api, int $status, string $message)
+    protected function halt(Micro $api, int $status, string $message): void
     {
         /** @var Response $response */
         $response = $api->getService('response');
