@@ -8,7 +8,6 @@ use App\Models\Users;
 
 trait QueryTrait
 {
-
     /**
      * @param $username
      * @return object|false
