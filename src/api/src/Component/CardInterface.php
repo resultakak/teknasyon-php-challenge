@@ -4,5 +4,4 @@ namespace Api\Component;
 
 interface CardInterface
 {
-
 }
