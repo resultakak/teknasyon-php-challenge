@@ -23,7 +23,7 @@ abstract class AbstractController extends Controller
 
     abstract public function check_subscription();
 
-    protected function clean(string $text)
+    protected function clean(string $text): string
     {
         $text = $this->filter->sanitize($text, [
             Filters::FILTER_STRING,
@@ -35,7 +35,7 @@ abstract class AbstractController extends Controller
         return $text;
     }
 
-    protected function set_token_cache(CardInterface $card)
+    protected function set_token_cache(CardInterface $card): void
     {
         if (! $card instanceof CardInterface) {
             throw new HttpException("Bad Request", $this->response::BAD_REQUEST);
@@ -56,7 +56,7 @@ abstract class AbstractController extends Controller
         $this->session->set('token_true', true);
     }
 
-    protected function get_token_cache(CardInterface $card)
+    protected function get_token_cache(CardInterface $card): bool
     {
         if (! $card instanceof CardInterface) {
             throw new HttpException("Bad Request", $this->response::BAD_REQUEST);
