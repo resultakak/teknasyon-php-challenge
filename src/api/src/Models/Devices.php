@@ -11,11 +11,9 @@ use Phalcon\Validation\Validator\StringLength;
 
 class Devices extends Model
 {
-    public $id;
     public $uid;
     public $app_id;
     public $language;
-    public $os;
     public $token;
     public $created;
 
