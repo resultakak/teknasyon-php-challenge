@@ -24,7 +24,7 @@ class RouterProvider implements ServiceProviderInterface
         $application->setEventsManager($eventsManager);
     }
 
-    private function attachRoutes(Micro $application)
+    private function attachRoutes(Micro $application): void
     {
         $home = new Collection();
         $home
@@ -43,7 +43,7 @@ class RouterProvider implements ServiceProviderInterface
         $application->mount($api);
     }
 
-    private function attachMiddleware(Micro $application, Manager $eventsManager)
+    private function attachMiddleware(Micro $application, Manager $eventsManager): void
     {
         $middleware = $this->getMiddleware();
 
