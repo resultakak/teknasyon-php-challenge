@@ -32,4 +32,8 @@ phpmd:
 phpunit:
 	vendor/bin/phpunit tests/
 
-phpall: phpmd phpcs phpstan phpunit
+# vendor/bin/psalm --init
+psalm:
+	vendor/bin/psalm
+
+phpall: phpmd phpcs phpstan phpunit psalm
