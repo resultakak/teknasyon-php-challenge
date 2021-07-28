@@ -16,8 +16,7 @@ use Phalcon\Mvc\Micro\Collection;
 
 class RouterProvider implements ServiceProviderInterface
 {
-
-    public function register(DiInterface $container) : void
+    public function register(DiInterface $container): void
     {
         $application = $container->getShared('application');
         $eventsManager = $container->getShared('eventsManager');
@@ -35,7 +34,7 @@ class RouterProvider implements ServiceProviderInterface
         ;
         $application->mount($home);
 
-        $api = new Collection;
+        $api = new Collection();
         $api
             ->setHandler(new ApiController())
             ->setPrefix('/api')
@@ -52,12 +51,12 @@ class RouterProvider implements ServiceProviderInterface
         $middleware = $this->getMiddleware();
 
         foreach ($middleware as $class => $function) {
-            $eventsManager->attach('micro', new $class);
-            $application->{$function}(new $class);
+            $eventsManager->attach('micro', new $class());
+            $application->{$function}(new $class());
         }
     }
 
-    private function getMiddleware() : array
+    private function getMiddleware(): array
     {
         return [
             NotFoundMiddleware::class => 'before'
