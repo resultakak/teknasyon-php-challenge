@@ -6,7 +6,6 @@ namespace App\Traits;
 
 trait PasswordTrait
 {
-
     /**
      * @param string $password
      * @return string
@@ -32,7 +31,7 @@ trait PasswordTrait
      */
     protected function verify(string $password, string $hashed_password): bool
     {
-        if(password_verify($this->hashing($password), $hashed_password)) {
+        if (password_verify($this->hashing($password), $hashed_password)) {
             return true;
         }
 
