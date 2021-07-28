@@ -52,7 +52,7 @@ class MockController extends Controller
                 $data = [
                     'status'      => true,
                     'receipt'     => $receipt,
-                    'expire_date' => $date->format('Y-m-d H:i:s UTC -6'),
+                    'expire_date' => $date->format('Y-m-d H:i:s'),
                 ];
             }
 
