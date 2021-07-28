@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+
+    web:
+        image: nginx:latest
+        container_name: nginx
+        restart: always
+        ports:
+            - "80:80"
+        volumes:
+            - ./src:/var/www
+            - ./build/nginx:/etc/nginx/conf.d
+            - ./log/nginx:/var/log/nginx
+        networks:
+            - public
+        links:
+            - mock
+        depends_on:
+            - mock
+        env_file:
+            - .env
+        tty: true
+
+    mock:
+        build:
+            dockerfile: Dockerfile
+            context: ./src/mock/
+        container_name: mock
+        restart: always
+        volumes:
+            - ./src/mock:/var/www/mock
+        links:
+            - memcached:memcached
+        networks:
+            - public
+        env_file:
+            - .env
+        tty: true
+
+    db:
+        image: mysql
+        container_name: db
+        restart: unless-stopped
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_USER: ${DB_USERNAME}
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - ./build/mysql/docker:/docker-entrypoint-initdb.d
+            - ./build/mysql/data:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - public
+
+    redis:
+        image: redis
+        container_name: redis
+        restart: always
+        hostname: redis
+        ports:
+            - 6379:6379
+        networks:
+            - public
+        tty: true
+
+networks:
+    public:
+        driver: bridge
