@@ -11,6 +11,9 @@ use function date;
 use function json_decode;
 use function sha1;
 
+/**
+ * @method setStatusCode($code)
+ */
 class Response extends PhResponse
 {
     public const OK                    = 200;
