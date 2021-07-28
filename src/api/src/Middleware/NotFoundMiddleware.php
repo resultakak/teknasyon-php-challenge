@@ -33,6 +33,8 @@ class NotFoundMiddleware extends Injectable implements MiddlewareInterface
      */
     public function call(Micro $api): bool
     {
+        $api = $api;
+
         return true;
     }
 }
