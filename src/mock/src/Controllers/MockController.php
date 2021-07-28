@@ -25,6 +25,21 @@ class MockController extends Controller
         $this->_handle();
     }
 
+    public function auth_test()
+    {
+        try {
+            return $this->response
+                ->setPayloadSuccess(['message' => "Successfull"])
+                ->setStatusCode($this->response::OK);
+        } catch (HttpException $ex) {
+            $this->halt(
+                $this->application,
+                $ex->getCode(),
+                $ex->getMessage()
+            );
+        }
+    }
+
     protected function _handle()
     {
         try {
