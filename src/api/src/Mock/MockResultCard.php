@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Api\Mock;
 
@@ -9,7 +9,6 @@ use JsonSerializable;
 
 class MockResultCard implements CardInterface, JsonSerializable
 {
-
     /**
      * @var $receipt
      */
@@ -49,6 +48,20 @@ class MockResultCard implements CardInterface, JsonSerializable
         if (array_key_exists('expire_date', $data)) {
             $this->setExpireDate($data['expire_date']);
         }
+    }
+
+    public function jsonSerialize()
+    {
+        $data = [
+            'receipt' => $this->getReceipt(),
+            'status'  => $this->getStatus(),
+        ];
+
+        if (true === $this->getStatus()) {
+            $data['expire_date'] = $this->getExpireDate();
+        }
+
+        return $data;
     }
 
     /**
@@ -106,19 +119,5 @@ class MockResultCard implements CardInterface, JsonSerializable
         $this->expire_date = isset($expire_date) ? date('Y-m-d H:i:s', strtotime($expire_date)) : null;
 
         return $this;
-    }
-
-    public function jsonSerialize()
-    {
-        $data = [
-            'receipt' => $this->getReceipt(),
-            'status' => $this->getStatus(),
-        ];
-
-        if (true === $this->getStatus()) {
-            $data['expire_date'] = $this->getExpireDate();
-        }
-
-        return $data;
     }
 }
