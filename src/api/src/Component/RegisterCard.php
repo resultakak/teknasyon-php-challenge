@@ -31,9 +31,9 @@ class RegisterCard implements JsonSerializable, CardInterface
     protected $language;
 
     /**
-     * @var $os
+     * @var $_os
      */
-    protected $os;
+    protected $_os;
 
     /**
      * @var $created
@@ -54,7 +54,7 @@ class RegisterCard implements JsonSerializable, CardInterface
     {
         $data = json_decode(json_encode($data), true);
 
-        if (!isset($data) || empty($data) || !is_array($data)) {
+        if (!is_array($data)) {
             return;
         }
 
@@ -136,15 +136,15 @@ class RegisterCard implements JsonSerializable, CardInterface
      */
     public function getOs(): string
     {
-        return $this->os;
+        return $this->_os;
     }
 
     /**
-     * @param string $os
+     * @param string $_os
      */
-    public function setOs(string $os): void
+    public function setOs(string $_os): void
     {
-        $this->os = $os;
+        $this->_os = $_os;
     }
 
     /**
