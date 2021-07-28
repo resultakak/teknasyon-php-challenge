@@ -13,7 +13,6 @@ use function sha1;
 
 /**
  * @method setStatusCode($ACCEPTED)
- * @method getJsonRawBody()
  */
 class Response extends PhResponse
 {
