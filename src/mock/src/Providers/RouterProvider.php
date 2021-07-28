@@ -16,7 +16,6 @@ use Phalcon\Mvc\Micro\Collection;
 
 class RouterProvider implements ServiceProviderInterface
 {
-
     public function register(DiInterface $container): void
     {
         $application   = $container->getShared('application');
