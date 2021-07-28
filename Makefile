@@ -26,6 +26,9 @@ api-bash:
 mock-bash:
 	docker-compose exec mock bash
 
+mysql-dump:
+	docker-compose exec db mysqldump -uroot -ppassword --no-data example_app > sql/db.sql
+
 remove: stop
 	rm -rf ./build/mysql/data \
         ./build/mysql/docker \
