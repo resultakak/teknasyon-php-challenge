@@ -7,11 +7,13 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 ## Prerequisites
 
-### Software
+### Requirements
 
-* Git
-* Docker
-* Docker Compose
+* PHP `>= 7.4.21`
+* Phalcon `>= 4.1.0`
+* Git `>= 2.32.0`
+* Docker `20.10.7`
+* Docker Compose `1.29.2`
 
 ### Add to hosts file:
 
