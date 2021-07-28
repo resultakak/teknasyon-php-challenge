@@ -7,6 +7,11 @@ namespace Api\Http;
 use Phalcon\Http\Request as PhRequest;
 use function str_replace;
 
+/**
+ * Class Request
+ *
+ * @method getJsonRawBody()
+ */
 class Request extends PhRequest
 {
     /**
