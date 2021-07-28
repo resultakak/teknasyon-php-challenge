@@ -6,14 +6,17 @@ namespace Api\Controllers;
 
 use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
-use Api\Models\Devices;
 use Api\Models\Applications;
+use Api\Models\Devices;
+use Api\Traits\CryptoTrait;
 use Api\Traits\ResponseTrait;
 use Phalcon\Exception as HttpException;
+
 
 class ApiController extends AbstractController
 {
     use ResponseTrait;
+    use CryptoTrait;
 
     public function register()
     {
@@ -103,8 +106,44 @@ class ApiController extends AbstractController
                 'receipt' => $this->clean($postData->receipt),
             ]);
 
+            $device = Devices::findFirst([
+                'conditions' => 'token = :token:',
+                'bind'       => [
+                    'token' => $token
+                ]
+            ]);
+
+            if (empty($device->token) || empty($device->app_id)) {
+                throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
+            }
+
+            $app = Applications::findFirst(
+                [
+                    'conditions' => 'app_id = :app_id:',
+                    'bind'       => [
+                        'app_id' => $device->app_id
+                    ],
+                ]
+            );
+
+            if (! isset($app) || empty($app)) {
+                throw new HttpException("Not Found", $this->response::NOT_FOUND);
+            }
+
+            $password = $this->decrypt($app->password);
+
+            $mock = $this->mock
+                ->setPlatform($this->mock::IOS)
+                ->setUsername($app->username)
+                ->setPassword($password)
+                ->setPost(["receipt" => $card->getReceipt()])
+                ->handle()
+            ;
+
+            $result = $mock->getResult();
+
             return $this->response
-                ->setPayloadSuccess(['data' => $card])
+                ->setPayloadSuccess(['data' => $result])
                 ->setStatusCode($this->response::OK);
         } catch (HttpException $ex) {
             $this->halt(
