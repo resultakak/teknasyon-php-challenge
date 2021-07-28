@@ -12,6 +12,6 @@ class Request extends PhRequest
     {
         $data = $this->getJsonRawBody();
 
-        return true == isset($data->receipt) ? $data->receipt : false;
+        return true === isset($data->receipt) ? $data->receipt : false;
     }
 }
