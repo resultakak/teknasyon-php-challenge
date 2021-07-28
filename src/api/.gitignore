@@ -3,3 +3,5 @@
 public/.DS_Store
 vendor
 *.*.dist
+php-cs-fixer.phar
+.php-cs-fixer.cache
