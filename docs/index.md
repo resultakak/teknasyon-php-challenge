@@ -28,7 +28,7 @@ curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/setup
 ## Links
 
 * [Mobile Application Subscription Managment API](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
-* [Mock API](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
+* [Mock API](mock)
 
 ## Postman Collections
 
