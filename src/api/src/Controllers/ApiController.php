@@ -84,7 +84,7 @@ class ApiController extends AbstractController
             );
 
             if (! isset($device) || empty($device)) {
-                $device = new Devices;
+                $device = new Devices();
                 $device->uid = $card->getUid();
                 $device->app_id = $app->app_id;
                 $device->language = $card->getLanguage();
@@ -188,7 +188,7 @@ class ApiController extends AbstractController
 
             $result = $mock->getResult();
 
-            $subscriptions = new Subscriptions;
+            $subscriptions = new Subscriptions();
 
             $subscriptions->device_id = $device->id;
             $subscriptions->receipt = $result->getReceipt();
