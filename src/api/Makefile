@@ -1,4 +1,16 @@
 
+setup: install migrate seed
+
+
+install:
+	composer install
+
+migrate:
+	vendor/bin/phinx migrate
+
+seed:
+	vendor/bin/phinx seed:run
+
 phinx-init:
 	phinx init
 
