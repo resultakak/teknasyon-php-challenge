@@ -8,7 +8,6 @@ use Phalcon\Mvc\Model;
 
 class Subscriptions extends Model
 {
-
     /**
      * @var $device_id
      */
