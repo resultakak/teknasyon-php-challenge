@@ -48,8 +48,8 @@ docker-compose exec worker make setup
 
 ## Postman Collections
 
-* [Mobile Application Subscription Managment API (with Tests)](https://github.com/resultakak/php-challenge/blob/develop/docs/Rest_API.postman_collection.json)
-* [Mock API (with Tests)](https://github.com/resultakak/php-challenge/blob/develop/docs/Mock_API.postman_collection.json)
+* [Mobile Application Subscription Managment API (with Tests)](Rest_API.postman_collection.json)
+* [Mock API (with Tests)](Mock_API.postman_collection.json)
 
 ## SQL Structure
 
