@@ -29,11 +29,11 @@ class AuthenticationMiddleware implements MiddlewareInterface
         $userName = $request->getServer('PHP_AUTH_USER');
         $password = $request->getServer('PHP_AUTH_PW');
 
-        if(true === isset($userName)) {
+        if (true === isset($userName)) {
             /** @var User $user */
             $user = $this->findUserByUsername($userName);
 
-            if(true === isset($password) && true === isset($user->password) && true === $this->verify($password, $user->password)) {
+            if (true === isset($password) && true === isset($user->password) && true === $this->verify($password, $user->password)) {
                 return true;
             }
         }
