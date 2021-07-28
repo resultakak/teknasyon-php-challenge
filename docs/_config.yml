@@ -10,3 +10,6 @@ timezone: "Europe/Istanbul"
 exclude:
   - CHANGELOG.md
 repository: "https://github.com/resultakak/php-challenge"
+include:
+  - api.md
+  - mock.md
