@@ -42,7 +42,7 @@ class Devices extends Model
      */
     public $created;
 
-    public function initialize()
+    public function initialize(): void
     {
         $this->setSource('devices');
 
