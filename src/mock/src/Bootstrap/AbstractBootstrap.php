@@ -12,7 +12,6 @@ use function microtime;
 
 abstract class AbstractBootstrap
 {
-
     protected $application;
 
     protected $container;
