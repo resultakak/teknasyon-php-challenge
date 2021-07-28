@@ -54,10 +54,10 @@ class MockResultCard implements CardInterface, JsonSerializable
     {
         $data = [
             'receipt' => $this->getReceipt(),
-            'status'  => $this->getStatus(),
+            'status'  => $this->hasStatus(),
         ];
 
-        if (true === $this->getStatus()) {
+        if (true === $this->hasStatus()) {
             $data['expire_date'] = $this->getExpireDate();
         }
 
@@ -86,7 +86,7 @@ class MockResultCard implements CardInterface, JsonSerializable
     /**
      * @return bool
      */
-    public function getStatus(): bool
+    public function hasStatus(): bool
     {
         return $this->status ?? false;
     }
