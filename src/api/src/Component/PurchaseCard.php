@@ -6,7 +6,6 @@ namespace Api\Component;
 
 class PurchaseCard implements CardInterface
 {
-
     /**
      * @var $receipt
      */
@@ -25,7 +24,7 @@ class PurchaseCard implements CardInterface
             return;
         }
 
-        if(array_key_exists('receipt', $data)) {
+        if (array_key_exists('receipt', $data)) {
             $this->setReceipt($data['receipt']);
         }
     }
