@@ -19,26 +19,6 @@ class MockController extends Controller
         $this->_handle();
     }
 
-    public function android()
-    {
-        $this->_handle();
-    }
-
-    public function auth_test()
-    {
-        try {
-            return $this->response
-                ->setPayloadSuccess(['message' => "Successfull"])
-                ->setStatusCode($this->response::OK);
-        } catch (HttpException $ex) {
-            $this->halt(
-                $this->application,
-                $ex->getCode(),
-                $ex->getMessage()
-            );
-        }
-    }
-
     protected function _handle()
     {
         try {
@@ -46,7 +26,7 @@ class MockController extends Controller
 
             $receipt = $this->receipt->validation($receipt);
 
-            if (!isset($receipt) || empty($receipt)) {
+            if (! isset($receipt) || empty($receipt)) {
                 return $this->response
                     ->setPayloadError('Invalid Receipt Token')
                     ->setStatusCode($this->response::BAD_REQUEST);
@@ -57,8 +37,8 @@ class MockController extends Controller
             if (($last_char % 2) == 0) {
                 $code = $this->response::ACCEPTED;
                 $data = [
-                    'status'      => false,
-                    'receipt'     => $receipt
+                    'status'  => false,
+                    'receipt' => $receipt
                 ];
             } else {
                 $code = $this->response::OK;
@@ -73,6 +53,26 @@ class MockController extends Controller
             return $this->response
                 ->setPayloadSuccess(['data' => $data])
                 ->setStatusCode($code);
+        } catch (HttpException $ex) {
+            $this->halt(
+                $this->application,
+                $ex->getCode(),
+                $ex->getMessage()
+            );
+        }
+    }
+
+    public function android()
+    {
+        $this->_handle();
+    }
+
+    public function auth_test()
+    {
+        try {
+            return $this->response
+                ->setPayloadSuccess(['message' => "Successfull"])
+                ->setStatusCode($this->response::OK);
         } catch (HttpException $ex) {
             $this->halt(
                 $this->application,
