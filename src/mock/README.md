@@ -1,5 +1,23 @@
 # Mock API
 
+## Authentication
+
+Baisc Authentication
+
+```shell
+curl -I http://mock.local/api/auth_test -u username:password
+```
+
+```http
+HTTP/1.1 200 OK
+Server: nginx/1.21.1
+Date: Wed, 28 Jul 2021 18:38:05 GMT
+Content-Type: application/json
+Connection: keep-alive
+X-Powered-By: PHP/7.4.21
+E-Tag: 398606dada94100577db43c3127a19b77d19beeb
+```
+
 ## API Resources
 
 **iOS**
