@@ -36,5 +36,8 @@ return [
         'host'              => getenv('REDIS_HOST'),
         'port'              => getenv('REDIS_PORT'),
         'index'             => 2
+    ],
+    'mock' => [
+        'url' => 'http://t-mock.resul.me/api/{platform}/receipt/verify'
     ]
 ];
