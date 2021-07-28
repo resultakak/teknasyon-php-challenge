@@ -26,7 +26,7 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 ## Install
 
 ```shell
-curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/setup.sh | bash
+curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/install.sh | bash
 ```
 
 or
