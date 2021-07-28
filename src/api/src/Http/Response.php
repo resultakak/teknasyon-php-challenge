@@ -59,20 +59,20 @@ class Response extends PhResponse
     {
         $content   = $this->getContent();
         $timestamp = date('c');
-//        $hash      = sha1($timestamp . $content);
+        $hash      = sha1($timestamp . $content);
         $eTag      = sha1($content);
 
         $content = json_decode($this->getContent(), true);
         $jsonapi = [
-//            'jsonapi' => [
-//                'version' => '1.0',
-//            ],
+            'jsonapi' => [
+                'version' => '1.0',
+            ],
         ];
         $meta    = [
-//            'meta' => [
-//                'timestamp' => $timestamp,
-//                'hash'      => $hash,
-//            ]
+            'meta' => [
+                'timestamp' => $timestamp,
+                'hash'      => $hash,
+            ]
         ];
 
         $data = $jsonapi + $content + $meta;
