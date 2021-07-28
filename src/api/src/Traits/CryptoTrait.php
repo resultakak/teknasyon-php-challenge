@@ -6,6 +6,7 @@ namespace Api\Traits;
 
 use Phalcon\Crypt;
 use function getenv;
+use function base64_encode;
 
 trait CryptoTrait
 {
@@ -20,7 +21,7 @@ trait CryptoTrait
         $crypt     = new Crypt();
         $key = $this->getKey();
 
-        return $crypt->encrypt($text, $key);
+        return base64_encode($crypt->encrypt($text, $key));
     }
 
 
@@ -30,6 +31,6 @@ trait CryptoTrait
         $crypt     = new Crypt();
         $key = $this->getKey();
 
-        return $crypt->decrypt($encrypted, $key);
+        return $crypt->decrypt(base64_decode($encrypted), $key);
     }
 }
