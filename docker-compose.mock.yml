@@ -10,7 +10,7 @@ services:
             - "80:80"
         volumes:
             - ./src:/var/www
-            - ./build/nginx/mock.conf:/etc/nginx/conf.d/mock.conf
+            - ./build/nginx/tknys.conf:/etc/nginx/conf.d/tknys.conf
             - ./log/nginx:/var/log/nginx
         networks:
             - public
