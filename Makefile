@@ -1,4 +1,7 @@
 
+setup:
+	bash setup.sh
+
 start:
 	docker-compose up -d --build
 
@@ -8,12 +11,8 @@ stop:
 restart:
 	docker-compose down; docker-compose up --build --remove-orphans
 
-setup: composer-install
-
-composer-install: start
-	docker-compose exec api composer install;
-	docker-compose exec worker composer install;
-	docker-compose exec mock composer install;
+logs:
+	docker-compose logs -f
 
 mysql:
 	docker-compose exec db mysql -h 127.0.0.1 -u root -p
