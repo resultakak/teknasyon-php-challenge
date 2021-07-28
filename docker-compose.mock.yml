@@ -30,8 +30,6 @@ services:
         restart: always
         volumes:
             - ./src/mock:/var/www/mock
-        links:
-            - memcached:memcached
         networks:
             - public
         env_file:
