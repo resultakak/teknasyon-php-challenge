@@ -7,6 +7,7 @@ namespace Api\Controllers;
 use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
 use Api\Component\CheckSubscriptionCard;
+use Api\Http\Response;
 use Api\Mock\MockResultCard;
 use Api\Models\Applications;
 use Api\Models\Devices;
@@ -15,15 +16,15 @@ use Api\Traits\CryptoTrait;
 use Api\Traits\ResponseTrait;
 use Phalcon\Exception as HttpException;
 
-use function json_decode;
-use function json_encode;
-
 class ApiController extends AbstractController
 {
     use ResponseTrait;
     use CryptoTrait;
 
-    public function register()
+    /**
+     * @return Response
+     */
+    public function register(): Response
     {
         try {
             $postData = $this->request->getJsonRawBody();
@@ -96,7 +97,10 @@ class ApiController extends AbstractController
         }
     }
 
-    public function purchase()
+    /**
+     * @return Response
+     */
+    public function purchase(): Response
     {
         try {
             $token = $this->request->getBearerTokenFromHeader();
@@ -111,25 +115,16 @@ class ApiController extends AbstractController
                 'receipt' => $this->clean($postData->receipt),
             ]);
 
-            $cache_id = 'purch_'.$token.$card->getReceipt();
+            $cache_id = $this->cacheManager->cache_id([
+                $token,
+                $card->getReceipt()
+            ], "purch_");
 
-            $session = $this->session->get($cache_id);
+            $cache = $this->cacheManager->get($cache_id);
 
-            if (isset($session) && ! empty($session)) {
-                $cache_result = json_decode($session, true, 512,JSON_THROW_ON_ERROR);
-            }
-
-            if (! isset($cache_result) || empty($cache_result)) {
-                $cache = $this->cache->get($cache_id);
-                if (isset($cache) && ! empty($cache)) {
-                    $this->session->set($cache_id, $cache);
-                    $cache_result = json_decode($session, true, 512,JSON_THROW_ON_ERROR);
-                }
-            }
-
-            if (isset($cache_result) && ! empty($cache_result)) {
+            if (false !== $cache) {
                 return $this->response
-                    ->setPayloadSuccess(['data' => new MockResultCard($cache_result)])
+                    ->setPayloadSuccess(['data' => new MockResultCard($cache)])
                     ->setStatusCode($this->response::OK);
             }
 
@@ -194,9 +189,7 @@ class ApiController extends AbstractController
             }
 
             if(true === $result->getStatus()) {
-                $cache_id = 'purch_'.$token.$result->getReceipt();
-                $this->session->set($cache_id, json_encode($result, JSON_THROW_ON_ERROR));
-                $this->cache->set($cache_id, json_encode($result, JSON_THROW_ON_ERROR));
+                $this->cacheManager->set($cache_id, $result);
             }
 
             return $this->response
@@ -211,13 +204,28 @@ class ApiController extends AbstractController
         }
     }
 
-    public function check_subscription()
+    /**
+     * @return Response
+     */
+    public function check_subscription(): Response
     {
         try {
             $token = $this->request->getBearerTokenFromHeader();
 
             if (! isset($token) || empty($token)) {
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
+            }
+
+            $cache_id = $this->cacheManager->cache_id([
+                $token
+            ], "subs_");
+
+            $cache = $this->cacheManager->get($cache_id);
+
+            if (false !== $cache) {
+                return $this->response
+                    ->setPayloadSuccess(['data' => $cache])
+                    ->setStatusCode($this->response::OK);
             }
 
             $device = Devices::findFirst([
@@ -235,6 +243,8 @@ class ApiController extends AbstractController
                 'status'      => $device->status,
                 'expire_date' => $device->expire_date
             ]);
+
+            $this->cacheManager->set($cache_id, $result);
 
             return $this->response
                 ->setPayloadSuccess(['data' => $result])
