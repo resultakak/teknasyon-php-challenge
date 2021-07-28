@@ -14,7 +14,6 @@ use Phalcon\Session\Adapter\Redis;
 
 class SessionProvider implements ServiceProviderInterface
 {
-
     public function register(DiInterface $container): void
     {
         $container->setShared(
