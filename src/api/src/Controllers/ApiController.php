@@ -6,12 +6,17 @@ namespace Api\Controllers;
 
 use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
+use Api\Component\CheckSubscriptionCard;
+use Api\Mock\MockResultCard;
 use Api\Models\Applications;
 use Api\Models\Devices;
+use Api\Models\Subscriptions;
 use Api\Traits\CryptoTrait;
 use Api\Traits\ResponseTrait;
 use Phalcon\Exception as HttpException;
 
+use function json_decode;
+use function json_encode;
 
 class ApiController extends AbstractController
 {
@@ -106,6 +111,28 @@ class ApiController extends AbstractController
                 'receipt' => $this->clean($postData->receipt),
             ]);
 
+            $cache_id = 'purch_'.$token.$card->getReceipt();
+
+            $session = $this->session->get($cache_id);
+
+            if (isset($session) && ! empty($session)) {
+                $cache_result = json_decode($session, true, 512,JSON_THROW_ON_ERROR);
+            }
+
+            if (! isset($cache_result) || empty($cache_result)) {
+                $cache = $this->cache->get($cache_id);
+                if (isset($cache) && ! empty($cache)) {
+                    $this->session->set($cache_id, $cache);
+                    $cache_result = json_decode($session, true, 512,JSON_THROW_ON_ERROR);
+                }
+            }
+
+            if (isset($cache_result) && ! empty($cache_result)) {
+                return $this->response
+                    ->setPayloadSuccess(['data' => new MockResultCard($cache_result)])
+                    ->setStatusCode($this->response::OK);
+            }
+
             $device = Devices::findFirst([
                 'conditions' => 'token = :token:',
                 'bind'       => [
@@ -142,6 +169,36 @@ class ApiController extends AbstractController
 
             $result = $mock->getResult();
 
+            $subscriptions = new Subscriptions();
+
+            $subscriptions->device_id = $device->id;
+            $subscriptions->receipt = $result->getReceipt();
+            $subscriptions->status = $result->getStatus();
+            $subscriptions->expire_date = $result->getExpireDate();
+
+            if (false === $subscriptions->save()) {
+                $messages = $subscriptions->getMessages();
+                foreach ($messages as $message) {
+                    $this->logger->error($message);
+                }
+            }
+
+            $device->status = $result->getStatus();
+            $device->expire_date = $result->getExpireDate();
+
+            if (false === $device->update()) {
+                $messages = $device->getMessages();
+                foreach ($messages as $message) {
+                    $this->logger->error($message);
+                }
+            }
+
+            if(true === $result->getStatus()) {
+                $cache_id = 'purch_'.$token.$result->getReceipt();
+                $this->session->set($cache_id, json_encode($result, JSON_THROW_ON_ERROR));
+                $this->cache->set($cache_id, json_encode($result, JSON_THROW_ON_ERROR));
+            }
+
             return $this->response
                 ->setPayloadSuccess(['data' => $result])
                 ->setStatusCode($this->response::OK);
@@ -163,8 +220,24 @@ class ApiController extends AbstractController
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
             }
 
+            $device = Devices::findFirst([
+                'conditions' => 'token = :token:',
+                'bind'       => [
+                    'token' => $token
+                ]
+            ]);
+
+            if (empty($device->token) || empty($device->app_id)) {
+                throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
+            }
+
+            $result = new CheckSubscriptionCard([
+                'status'      => $device->status,
+                'expire_date' => $device->expire_date
+            ]);
+
             return $this->response
-                ->setPayloadSuccess(['data' => $token])
+                ->setPayloadSuccess(['data' => $result])
                 ->setStatusCode($this->response::OK);
         } catch (HttpException $ex) {
             $this->halt(
