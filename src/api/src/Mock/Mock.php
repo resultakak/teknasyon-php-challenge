@@ -10,10 +10,9 @@ use function base64_encode;
 
 class Mock
 {
+    public const IOS = 'ios';
 
-    const IOS = 'ios';
-
-    const ANDROID = 'android';
+    public const ANDROID = 'android';
 
     /**
      * @var $url
@@ -179,7 +178,7 @@ class Mock
      * @param string $password
      * @return $this
      */
-    public function setPassword(string $password) : self
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
