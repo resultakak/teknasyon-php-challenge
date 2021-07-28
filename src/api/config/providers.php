@@ -11,6 +11,7 @@ use Api\Providers\RequestProvider;
 use Api\Providers\ResponseProvider;
 use Api\Providers\RouterProvider;
 use Api\Providers\SessionProvider;
+use Api\Providers\MockProvider;
 
 return [
     ConfigProvider::class,
@@ -21,5 +22,6 @@ return [
     ResponseProvider::class,
     RouterProvider::class,
     CacheDataProvider::class,
-    SessionProvider::class
+    SessionProvider::class,
+    MockProvider::class
 ];
