@@ -46,6 +46,9 @@ class Response extends PhResponse
         502 => 'Bad Gateway',
     ];
 
+    /**
+     * @return int|string
+     */
     public function getHttpCodeDescription(int $code)
     {
         if (true === isset($this->codes[$code])) {
