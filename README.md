@@ -62,9 +62,9 @@ app
 ├── logs
 ├── sql
 ├── src
-│   └── api                 ── [Phalcon]
-│   ├── mock                ── [Phalcon]
-│   └── worker              ── [Laravel]
+│   └── api                     ── Phalcon
+│   ├── mock                    ── Phalcon
+│   └── worker                  ── Laravel
 ├── docker-compose.yml
 ├── example.env
 ├── install.sh
@@ -72,3 +72,5 @@ app
 ├── README.md
 └── setup.md                    
 ```
+
+See [Documentation](https://resul.me/php-challenge/).
