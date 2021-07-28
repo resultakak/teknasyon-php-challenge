@@ -40,8 +40,10 @@ class ErrorHandler
      * @param string $message
      * @param string $file
      * @param int    $line
+     *
+     * @return void
      */
-    public function handle(int $number, string $message, string $file = '', int $line = 0)
+    public function handle(int $number, string $message, string $file = '', int $line = 0): void
     {
         $this
             ->logger
@@ -58,8 +60,10 @@ class ErrorHandler
 
     /**
      * Application shutdown - logs metrics in devMode
+     *
+     * @return void
      */
-    public function shutdown()
+    public function shutdown(): void
     {
         if (true === $this->config->path('app.devMode')) {
             $memory    = number_format(memory_get_usage() / 1000000, 2);
