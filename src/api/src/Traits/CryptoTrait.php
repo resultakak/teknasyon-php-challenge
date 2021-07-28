@@ -10,12 +10,15 @@ use function base64_encode;
 
 trait CryptoTrait
 {
+    /**
+     * @return false|string
+     */
     private function getKey()
     {
         return base64_decode(getenv('APP_KEY'));
     }
 
-    protected function encrypt(string $text)
+    protected function encrypt(string $text): string
     {
         /** @var Crypt $crypt */
         $crypt = new Crypt();
