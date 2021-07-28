@@ -12,7 +12,6 @@ use function microtime;
 
 abstract class AbstractBootstrap
 {
-
     protected $application;
 
     protected $container;
@@ -55,7 +54,7 @@ abstract class AbstractBootstrap
     {
         /** @var ServiceProviderInterface $provider */
         foreach ($this->providers as $provider) {
-            (new $provider)->register($this->container);
+            (new $provider())->register($this->container);
         }
     }
 }
