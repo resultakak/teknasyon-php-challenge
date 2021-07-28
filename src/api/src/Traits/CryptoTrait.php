@@ -10,8 +10,8 @@ use function base64_encode;
 
 trait CryptoTrait
 {
-
-    private function getKey() {
+    private function getKey()
+    {
         return base64_decode(getenv('APP_KEY'));
     }
 
