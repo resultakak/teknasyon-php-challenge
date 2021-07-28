@@ -9,7 +9,6 @@ use function str_replace;
 
 class Request extends PhRequest
 {
-
     /**
      * @return string
      */
