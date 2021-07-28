@@ -17,7 +17,6 @@ use function str_replace;
 
 abstract class AbstractController extends Controller
 {
-
     abstract public function register();
 
     abstract public function purchase();
@@ -36,8 +35,9 @@ abstract class AbstractController extends Controller
         return $text;
     }
 
-    protected function set_token_cache(CardInterface $card) {
-        if(! $card instanceof CardInterface) {
+    protected function set_token_cache(CardInterface $card)
+    {
+        if (! $card instanceof CardInterface) {
             throw new HttpException("Bad Request", $this->response::BAD_REQUEST);
         }
 
@@ -56,8 +56,9 @@ abstract class AbstractController extends Controller
         $this->session->set('token_true', true);
     }
 
-    protected function get_token_cache(CardInterface $card) {
-        if(! $card instanceof CardInterface) {
+    protected function get_token_cache(CardInterface $card)
+    {
+        if (! $card instanceof CardInterface) {
             throw new HttpException("Bad Request", $this->response::BAD_REQUEST);
         }
 
