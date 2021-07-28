@@ -5,7 +5,7 @@
 Baisc Authentication
 
 ```shell
-curl -I http://mock.local/api/auth_test -u username:password
+curl -I http://mock.local/api/auth_test -u 'username:password'
 ```
 
 ```http
@@ -16,6 +16,21 @@ Content-Type: application/json
 Connection: keep-alive
 X-Powered-By: PHP/7.4.21
 E-Tag: 398606dada94100577db43c3127a19b77d19beeb
+```
+
+```javascript
+{
+    "jsonapi": {
+        "version": "1.0"
+    },
+    "data": {
+        "message": "Successfull"
+    },
+    "meta": {
+        "timestamp": "2021-07-28T18:44:43+00:00",
+            "hash": "fe4b43d735686d3adbb84166224e9dc892814de6"
+    }
+}
 ```
 
 ## API Resources
