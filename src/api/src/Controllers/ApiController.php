@@ -17,6 +17,11 @@ use Api\Traits\CryptoTrait;
 use Api\Traits\ResponseTrait;
 use Phalcon\Exception as HttpException;
 
+/**
+ * Class ApiController
+ *
+ * @SuppressWarnings(PHPMD.StaticAccess)
+ */
 class ApiController extends AbstractController
 {
     use ResponseTrait;
@@ -60,9 +65,6 @@ class ApiController extends AbstractController
                     ->setStatusCode($this->response::ACCEPTED);
             }
 
-            /**
-             * @SuppressWarnings(StaticAccess)
-             */
             $app = Applications::findFirst(
                 [
                     'conditions' => 'app_id = :app_id:',
@@ -76,9 +78,6 @@ class ApiController extends AbstractController
                 throw new HttpException("Not Found", $this->response::NOT_FOUND);
             }
 
-            /**
-             * @SuppressWarnings(PHPMD.StaticAccess)
-             */
             $device = Devices::findFirst(
                 [
                     'conditions' => 'uid = :uid: AND app_id = :app_id:',
@@ -166,7 +165,7 @@ class ApiController extends AbstractController
                 ]
             );
 
-            if (empty($device->token) || empty($device->app_id)) {
+            if (empty($device->app_id)) {
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
             }
 
@@ -179,10 +178,6 @@ class ApiController extends AbstractController
                 ]
             );
 
-            if (false === $app) {
-                throw new HttpException("Not Found", $this->response::NOT_FOUND);
-            }
-
             $password = $this->decrypt($app->password);
 
             $mock = $this->mock
@@ -192,13 +187,14 @@ class ApiController extends AbstractController
                 ->setPost(["receipt" => $card->getReceipt()])
                 ->handle();
 
+            /** @var MockResultCard $result */
             $result = $mock->getResult();
 
             $subscriptions = new Subscriptions();
 
             $subscriptions->device_id = $device->id;
             $subscriptions->receipt = $result->getReceipt();
-            $subscriptions->status = $result->getStatus();
+            $subscriptions->status = $result->hasStatus();
             $subscriptions->expire_date = $result->getExpireDate();
 
             if (false === $subscriptions->save()) {
@@ -208,7 +204,7 @@ class ApiController extends AbstractController
                 }
             }
 
-            $device->status = $result->getStatus();
+            $device->status = $result->hasStatus();
             $device->expire_date = $result->getExpireDate();
 
             if (false === $device->update()) {
@@ -218,7 +214,7 @@ class ApiController extends AbstractController
                 }
             }
 
-            if (true === $result->getStatus()) {
+            if (true === $result->hasStatus()) {
                 $this->cacheManager->set($cache_id, $result);
             }
 
