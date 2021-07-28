@@ -188,7 +188,7 @@ class ApiController extends AbstractController
                 }
             }
 
-            if(true === $result->getStatus()) {
+            if (true === $result->getStatus()) {
                 $this->cacheManager->set($cache_id, $result);
             }
 
