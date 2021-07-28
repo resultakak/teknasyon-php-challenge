@@ -43,7 +43,7 @@ class CheckSubscriptionCard implements CardInterface, JsonSerializable
     /**
      * @return bool
      */
-    public function getStatus(): bool
+    public function hasStatus(): bool
     {
         return $this->status ?? false;
     }
@@ -81,10 +81,10 @@ class CheckSubscriptionCard implements CardInterface, JsonSerializable
     public function jsonSerialize()
     {
         $data = [
-            'status' => $this->getStatus(),
+            'status' => $this->hasStatus(),
         ];
 
-        if (true === $this->getStatus()) {
+        if (true === $this->hasStatus()) {
             $data['expire_date'] = $this->getExpireDate();
         }
 
