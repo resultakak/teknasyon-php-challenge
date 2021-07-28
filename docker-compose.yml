@@ -26,24 +26,6 @@ services:
             - .env
         tty: true
 
-    #  varnish:
-    #    image: varnish
-    #    container_name: varnish
-    #    restart: always
-    #    ports:
-    #      - "80:80"
-    #    networks:
-    #      - public
-    #    environment:
-    #      - VARNISH_SIZE=2G
-    #    depends_on:
-    #      - web
-    #    links:
-    #      - web
-    #    volumes:
-    #      - ./build/varnish/default.vcl:/etc/varnish/default.vcl:ro
-    #    tty: true
-
     memcached:
         image: memcached:latest
         ports:
@@ -132,11 +114,8 @@ services:
             - 6379:6379
         networks:
             - public
-            - private
         tty: true
 
 networks:
     public:
-        driver: bridge
-    private:
         driver: bridge
