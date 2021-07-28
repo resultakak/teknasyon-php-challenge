@@ -7,7 +7,6 @@ namespace Api\Providers;
 use Api\Controllers\ApiController;
 use Api\Controllers\DefaultController;
 use Api\Middleware\NotFoundMiddleware;
-
 use Phalcon\Di\DiInterface;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Events\Manager;
@@ -30,8 +29,7 @@ class RouterProvider implements ServiceProviderInterface
         $home = new Collection();
         $home
             ->setHandler(new DefaultController())
-            ->get('/', 'index')
-        ;
+            ->get('/', 'index');
         $application->mount($home);
 
         $api = new Collection();
@@ -40,8 +38,7 @@ class RouterProvider implements ServiceProviderInterface
             ->setPrefix('/api')
             ->post('/register', 'register')
             ->post('/purchase', 'purchase')
-            ->get('/check_subscription', 'check_subscription')
-        ;
+            ->get('/check_subscription', 'check_subscription');
 
         $application->mount($api);
     }
