@@ -13,16 +13,15 @@ use Phalcon\Storage\SerializerFactory;
 
 class SessionProvider implements ServiceProviderInterface
 {
-
-    public function register(DiInterface $container) : void
+    public function register(DiInterface $container): void
     {
         $config = $container->getShared('config');
 
         $container->setShared('session', function () use ($config) {
             $options = $config->get('session')->toArray();
 
-            $session = new Manager;
-            $serializerFactory = new SerializerFactory;
+            $session = new Manager();
+            $serializerFactory = new SerializerFactory();
             $factory = new AdapterFactory($serializerFactory);
             $redis = new Redis($factory, $options);
 
