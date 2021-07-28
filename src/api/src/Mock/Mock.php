@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Api\Mock;
 
+use Api\Mock\MockResultCard;
+
 use function base64_encode;
 
 class Mock
@@ -111,7 +113,7 @@ class Mock
     /**
      * @return string
      */
-    public function getPlatform() : string
+    public function getPlatform(): string
     {
         return $this->platform;
     }
@@ -120,7 +122,7 @@ class Mock
      * @param string $platform
      * @return $this
      */
-    public function setPlatform(string $platform) : self
+    public function setPlatform(string $platform): self
     {
         $this->platform = $platform;
 
@@ -130,7 +132,7 @@ class Mock
     /**
      * @return string
      */
-    public function getUrl() : string
+    public function getUrl(): string
     {
         return str_replace('{platform}', $this->getPlatform(), $this->url);
     }
@@ -139,7 +141,7 @@ class Mock
      * @param string $url
      * @return $this
      */
-    public function setUrl(string $url) : self
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -149,7 +151,7 @@ class Mock
     /**
      * @return string
      */
-    public function getUsername() : string
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -158,7 +160,7 @@ class Mock
      * @param string $username
      * @return $this
      */
-    public function setUsername(string $username) : self
+    public function setUsername(string $username): self
     {
         $this->username = $username;
 
@@ -168,7 +170,7 @@ class Mock
     /**
      * @return string
      */
-    public function getPassword() : string
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -187,7 +189,7 @@ class Mock
     /**
      * @return array
      */
-    public function getPost() : array
+    public function getPost(): array
     {
         return $this->post;
     }
@@ -196,7 +198,7 @@ class Mock
      * @param array $post
      * @return $this
      */
-    public function setPost(array $post) : self
+    public function setPost(array $post): self
     {
         $this->post = $post;
 
@@ -206,7 +208,7 @@ class Mock
     /**
      * @return array
      */
-    public function getResult() : array
+    public function getResult(): MockResultCard
     {
         return $this->result;
     }
@@ -215,9 +217,9 @@ class Mock
      * @param array $result
      * @return $this
      */
-    public function setResult(array $result) : self
+    public function setResult(array $result): self
     {
-        $this->result = $result;
+        $this->result = new MockResultCard($result);
 
         return $this;
     }
