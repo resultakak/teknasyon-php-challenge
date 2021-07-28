@@ -33,6 +33,7 @@ phpunit:
 	vendor/bin/phpunit tests/
 
 # vendor/bin/psalm --init
+# vendor/bin/psalm-plugin show
 psalm:
 	vendor/bin/psalm --show-info=true
 
