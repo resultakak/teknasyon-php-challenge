@@ -62,22 +62,16 @@ abstract class AbstractController extends Controller
             throw new HttpException("Bad Request", $this->response::BAD_REQUEST);
         }
 
-        if (true === $this->session->get('token_true')) {
-            return true;
-        }
-
         $cache_id = $this->cacheManager->cache_id([$card->getToken()], "token_");
 
         $cache = $this->cacheManager->get($cache_id);
 
-        if (false !== $cache) {
-            if (true === $cache['token_true']) {
-                $this->session->set('token', $cache['token']);
-                $this->session->set('uid', $cache['uid']);
-                $this->session->set('app_id', $cache['app_id']);
-                $this->session->set('token_true', true);
-                return true;
-            }
+        if (true === isset($cache['token_true']) && true === $cache['token_true']) {
+            $this->session->set('token', $cache['token']);
+            $this->session->set('uid', $cache['uid']);
+            $this->session->set('app_id', $cache['app_id']);
+            $this->session->set('token_true', true);
+            return true;
         }
 
         return false;
