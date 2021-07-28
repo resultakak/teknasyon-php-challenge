@@ -34,6 +34,6 @@ phpunit:
 
 # vendor/bin/psalm --init
 psalm:
-	vendor/bin/psalm
+	vendor/bin/psalm --show-info=true
 
 phpall: phpmd phpcs phpstan phpunit psalm
