@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -12,7 +12,6 @@ use Phalcon\Mvc\Controller;
 
 class MockController extends Controller
 {
-
     use ResponseTrait;
 
     public function ios()
@@ -53,9 +52,9 @@ class MockController extends Controller
                     ->setStatusCode($this->response::BAD_REQUEST);
             }
 
-            $last_char = (int) substr($receipt , -1);
+            $last_char = (int) substr($receipt, -1);
 
-            if(($last_char % 2) == 0) {
+            if (($last_char % 2) == 0) {
                 $code = $this->response::ACCEPTED;
                 $data = [
                     'status'      => false,
