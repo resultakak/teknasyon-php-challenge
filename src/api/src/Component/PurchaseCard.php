@@ -31,9 +31,9 @@ class PurchaseCard implements CardInterface
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getReceipt(): mixed
+    public function getReceipt(): string
     {
         return $this->receipt;
     }
