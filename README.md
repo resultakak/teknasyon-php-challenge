@@ -52,3 +52,23 @@ docker-compose exec worker make setup
 
 * [Mobile Application Subscription Managment API (with Tests)](https://github.com/resultakak/php-challenge/blob/develop/docs/Rest_API.postman_collection.json)
 * [Mock API (with Tests)](https://github.com/resultakak/php-challenge/blob/develop/docs/Mock_API.postman_collection.json)
+
+## Folder Structure
+
+```
+app
+├── build
+├── docs
+├── logs
+├── sql
+├── src
+│   └── api (Phalcon)
+│   ├── mock  (Phalcon)
+│   └── worker (Laravel)
+├── docker-compose.yml
+├── example.env [Example Env]
+├── install.sh
+├── Makefile
+├── README.md
+└── setup.md                    
+```
