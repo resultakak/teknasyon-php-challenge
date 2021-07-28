@@ -11,6 +11,7 @@ use Api\Providers\RequestProvider;
 use Api\Providers\ResponseProvider;
 use Api\Providers\RouterProvider;
 use Api\Providers\SessionProvider;
+use Api\Providers\CacheManagerProvider;
 use Api\Providers\MockProvider;
 
 return [
@@ -23,5 +24,6 @@ return [
     RouterProvider::class,
     CacheDataProvider::class,
     SessionProvider::class,
+    CacheManagerProvider::class,
     MockProvider::class
 ];
