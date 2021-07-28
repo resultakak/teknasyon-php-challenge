@@ -12,7 +12,6 @@ use function md5;
 
 class Manager
 {
-
     /**
      * @var Micro $application
      */
@@ -70,7 +69,7 @@ class Manager
         }
 
         if (isset($result) && ! empty($result)) {
-            $result = json_decode($result, true, 512,JSON_THROW_ON_ERROR);
+            $result = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
         }
 
         return true === isset($result) ? $result : false;
