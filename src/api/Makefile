@@ -32,6 +32,9 @@ phpmd:
 phpunit:
 	vendor/bin/phpunit tests/
 
+php-cs-fixer:
+	php-cs-fixer/vendor/bin/php-cs-fixer fix src
+
 # vendor/bin/psalm --init
 # vendor/bin/psalm-plugin show
 psalm:
