@@ -58,27 +58,27 @@ class RegisterCard implements JsonSerializable, CardInterface
             return;
         }
 
-        if(array_key_exists('uid', $data)) {
+        if (array_key_exists('uid', $data)) {
             $this->setUid($data['uid']);
         }
 
-        if(array_key_exists('app_id', $data)) {
+        if (array_key_exists('app_id', $data)) {
             $this->setAppId($data['app_id']);
         }
 
-        if(array_key_exists('language', $data)) {
+        if (array_key_exists('language', $data)) {
             $this->setLanguage($data['language']);
         }
 
-        if(array_key_exists('os', $data)) {
+        if (array_key_exists('os', $data)) {
             $this->setOs($data['os']);
         }
 
-        if(array_key_exists('created', $data)) {
+        if (array_key_exists('created', $data)) {
             $this->setCreated($data['created']);
         }
 
-        if($this->getUid() && $this->getAppId()) {
+        if ($this->getUid() && $this->getAppId()) {
             $this->setToken();
         }
     }
