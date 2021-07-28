@@ -46,6 +46,7 @@ docker-compose exec worker make setup
 * [Documentation](https://resul.me/php-challenge/)
 * [Mobile Application Subscription Managment API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
 * [Mock API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
+* [SQL File](https://github.com/resultakak/php-challenge/blob/develop/sql/db.sql)
 
 ## Postman Collections
 
