@@ -1,3 +1,5 @@
+Welcome
+===
 
 Mobile applications are able to make in-app-purchase purchases, verification and current subscription control using this API.
 
@@ -5,11 +7,13 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 ## Prerequisites
 
-### Software
+### Requirements
 
-* Git
-* Docker
-* Docker Compose
+* PHP `>= 7.4.21`
+* Phalcon `>= 4.1.0`
+* Git `>= 2.32.0`
+* Docker `20.10.7`
+* Docker Compose `1.29.2`
 
 ### Add to hosts file:
 
@@ -22,15 +26,51 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 ## Install
 
 ```shell
-curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/setup.sh | bash
+curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/install.sh | bash
 ```
 
-## Links
+or
 
-* [Mobile Application Subscription Managment API](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
+```shell
+git clone https://github.com/resultakak/php-challenge.git
+cd php-challenge
+cp example.env .env
+docker-compose up -d --build
+docker-compose exec api make setup
+docker-compose exec mock make setup
+docker-compose exec worker make setup
+```
+
+## Index
+
+* [Mobile Application Subscription Managment API](api)
 * [Mock API](mock)
 
 ## Postman Collections
 
-* [Mobile Application Subscription Managment API](Rest_API.postman_collection.json)
-* [Mock API](Mock_API.postman_collection.json)
+* [Mobile Application Subscription Managment API (with Tests)](https://github.com/resultakak/php-challenge/blob/develop/docs/Rest_API.postman_collection.json)
+* [Mock API (with Tests)](https://github.com/resultakak/php-challenge/blob/develop/docs/Mock_API.postman_collection.json)
+
+## SQL Structure
+
+* [SQL File](https://github.com/resultakak/php-challenge/blob/develop/sql/db.sql)
+
+## Folder Structure
+
+```
+app
+├── build
+├── docs
+├── logs
+├── sql
+├── src
+│   └── api                     ── Phalcon
+│   ├── mock                    ── Phalcon
+│   └── worker                  ── Laravel
+├── docker-compose.yml
+├── example.env
+├── install.sh
+├── Makefile
+├── README.md
+└── setup.md                    
+```
