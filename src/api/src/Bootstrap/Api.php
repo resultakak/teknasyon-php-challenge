@@ -21,6 +21,9 @@ class Api extends AbstractBootstrap
         }
     }
 
+    /**
+     * @return void
+     */
     public function setup()
     {
         $this->container = new FactoryDefault();
