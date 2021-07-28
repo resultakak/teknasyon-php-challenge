@@ -11,6 +11,7 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 * [Install](install)
 * [Folder Structure](folder)
+* [SQL Structure](sql)
 
 ### API
 
@@ -21,7 +22,3 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 * [Mobile Application Subscription Managment API (with Tests)](Rest_API.postman_collection.json)
 * [Mock API (with Tests)](Mock_API.postman_collection.json)
-
-### SQL Structure
-
-* [SQL File](https://github.com/resultakak/php-challenge/blob/develop/sql/db.sql)
