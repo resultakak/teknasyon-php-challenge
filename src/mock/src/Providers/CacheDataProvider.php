@@ -14,7 +14,6 @@ use Phalcon\Storage\SerializerFactory;
 
 class CacheDataProvider implements ServiceProviderInterface
 {
-
     public function register(DiInterface $container): void
     {
         $config = $container->getShared('config');
