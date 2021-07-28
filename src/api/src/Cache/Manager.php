@@ -44,8 +44,10 @@ class Manager
 
     /**
      * @throws \JsonException
+     *
+     * @return void
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $value = json_encode($value, JSON_THROW_ON_ERROR);
         $this->application->session->set($key, $value);
