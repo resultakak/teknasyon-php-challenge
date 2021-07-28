@@ -6,46 +6,45 @@ namespace Api\Constants;
 
 class Filters
 {
+    public const FILTER_ABSINT = 'absint';
 
-    const FILTER_ABSINT = 'absint';
+    public const FILTER_ALNUM = 'alnum';
 
-    const FILTER_ALNUM = 'alnum';
+    public const FILTER_ALPHA = 'alpha';
 
-    const FILTER_ALPHA = 'alpha';
+    public const FILTER_BOOL = 'bool';
 
-    const FILTER_BOOL = 'bool';
+    public const FILTER_EMAIL = 'email';
 
-    const FILTER_EMAIL = 'email';
+    public const FILTER_FLOAT = 'float';
 
-    const FILTER_FLOAT = 'float';
+    public const FILTER_INT = 'int';
 
-    const FILTER_INT = 'int';
+    public const FILTER_LOWER = 'lower';
 
-    const FILTER_LOWER = 'lower';
+    public const FILTER_LOWERFIRST = 'lowerFirst';
 
-    const FILTER_LOWERFIRST = 'lowerFirst';
+    public const FILTER_REGEX = 'regex';
 
-    const FILTER_REGEX = 'regex';
+    public const FILTER_REMOVE = 'remove';
 
-    const FILTER_REMOVE = 'remove';
+    public const FILTER_REPLACE = 'replace';
 
-    const FILTER_REPLACE = 'replace';
+    public const FILTER_SPECIAL = 'special';
 
-    const FILTER_SPECIAL = 'special';
+    public const FILTER_SPECIALFULL = 'specialFull';
 
-    const FILTER_SPECIALFULL = 'specialFull';
+    public const FILTER_STRING = 'string';
 
-    const FILTER_STRING = 'string';
+    public const FILTER_STRIPTAGS = 'striptags';
 
-    const FILTER_STRIPTAGS = 'striptags';
+    public const FILTER_TRIM = 'trim';
 
-    const FILTER_TRIM = 'trim';
+    public const FILTER_UPPER = 'upper';
 
-    const FILTER_UPPER = 'upper';
+    public const FILTER_UPPERFIRST = 'upperFirst';
 
-    const FILTER_UPPERFIRST = 'upperFirst';
+    public const FILTER_UPPERWORDS = 'upperWords';
 
-    const FILTER_UPPERWORDS = 'upperWords';
-
-    const FILTER_URL = 'url';
+    public const FILTER_URL = 'url';
 }
