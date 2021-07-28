@@ -13,3 +13,4 @@ repository: "https://github.com/resultakak/php-challenge"
 include:
   - api.md
   - mock.md
+  - install.md
