@@ -3,6 +3,8 @@ Mobile Application Subscription Management
 
 Mobile applications are able to make in-app-purchase purchases, verification and current subscription control using this API.
 
+See [Documentation](https://resul.me/php-challenge/).
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f0afcfa224d41a09047f7857af08e7e)](https://app.codacy.com/gh/resultakak/php-challenge?utm_source=github.com&utm_medium=referral&utm_content=resultakak/php-challenge&utm_campaign=Badge_Grade_Settings)
 
 ## Prerequisites
@@ -49,4 +51,3 @@ docker-compose exec worker make setup
 * [Mobile Application Subscription Managment API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
 * [Mock API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
 
-See [Documentation](https://resul.me/php-challenge/).
