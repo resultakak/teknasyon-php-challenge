@@ -1,4 +1,4 @@
-FROM resultakak/php:latest
+FROM resultakak/php:mavi
 
 RUN apt-get update && \
     apt-get install -y supervisor && \
