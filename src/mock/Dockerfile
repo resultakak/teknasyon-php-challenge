@@ -1,4 +1,4 @@
-FROM resultakak/php:latest
+FROM resultakak/php:mavi
 
 USER $user
 
