@@ -1,4 +1,4 @@
-FROM resultakak/php:latest
+FROM resultakak/php:mavi
 
 WORKDIR /var/www/api
 
