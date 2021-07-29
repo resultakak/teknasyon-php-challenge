@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+    cron:
+        build:
+            dockerfile: Dockerfile
+            context: ./build/cron/
+        container_name: cron
+        restart: unless-stopped
+        volumes:
+            - ./src/worker:/var/www/worker
+        networks:
+            - public
+        env_file:
+            - .env
+        tty: true
+
+networks:
+    public:
+        driver: bridge
