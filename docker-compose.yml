@@ -33,7 +33,7 @@ services:
             - "11211:11211"
 
     api:
-        image: resultakak/php:latest
+        image: resultakak/php:mavi
         container_name: api
         restart: always
         volumes:
@@ -50,7 +50,7 @@ services:
         tty: true
 
     mock:
-        image: resultakak/php:latest
+        image: resultakak/php:mavi
         container_name: mock
         restart: always
         volumes:
@@ -65,7 +65,7 @@ services:
         tty: true
 
     worker:
-        image: resultakak/php:latest
+        image: resultakak/php:mavi
         container_name: worker
         restart: always
         volumes:
