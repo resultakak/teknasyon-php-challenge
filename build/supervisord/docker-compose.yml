@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+
+    supervisor:
+        build:
+            dockerfile: Dockerfile
+            context: ./build/supervisord/
+        container_name: supervisor
+        restart: unless-stopped
+        volumes:
+            - ./src/worker:/var/www/worker
+        networks:
+            - public
+        env_file:
+            - .env
+        tty: true
+
+networks:
+    public:
+        driver: bridge
