@@ -28,20 +28,21 @@ services:
 
     memcached:
         image: memcached:latest
+        container_name: memcached
         ports:
             - "11211:11211"
 
     api:
-        build:
-            dockerfile: Dockerfile
-            context: ./src/api/
+        image: resultakak/php:latest
         container_name: api
         restart: always
         volumes:
             - ./src/api:/var/www/api
+        working_dir: /var/www/api
         links:
             - db
             - memcached:memcached
+            - mock
         networks:
             - public
         env_file:
@@ -49,13 +50,12 @@ services:
         tty: true
 
     mock:
-        build:
-            dockerfile: Dockerfile
-            context: ./src/mock/
+        image: resultakak/php:latest
         container_name: mock
         restart: always
         volumes:
             - ./src/mock:/var/www/mock
+        working_dir: /var/www/mock
         links:
             - memcached:memcached
         networks:
@@ -65,14 +65,28 @@ services:
         tty: true
 
     worker:
-        build:
-            args:
-                user: worker
-                uid: 1000
-            dockerfile: Dockerfile
-            context: ./src/worker/
+        image: resultakak/php:latest
         container_name: worker
         restart: always
+        volumes:
+            - ./src/worker:/var/www/worker
+        networks:
+            - public
+        working_dir: /var/www/worker
+        links:
+            - db
+            - redis
+            - supervisor
+        env_file:
+            - .env
+        tty: true
+
+    supervisor:
+        build:
+            dockerfile: Dockerfile
+            context: ./build/supervisord/
+        container_name: supervisor
+        restart: unless-stopped
         volumes:
             - ./src/worker:/var/www/worker
         networks:
