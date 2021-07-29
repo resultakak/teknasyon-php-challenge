@@ -48,31 +48,5 @@ docker-compose exec worker make setup
 * [Documentation](https://resul.me/php-challenge/)
 * [Mobile Application Subscription Managment API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
 * [Mock API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
-* [SQL File](https://github.com/resultakak/php-challenge/blob/develop/sql/db.sql)
-
-## Postman Collections
-
-* [Mobile Application Subscription Managment API (with Tests)](https://github.com/resultakak/php-challenge/blob/develop/docs/Rest_API.postman_collection.json)
-* [Mock API (with Tests)](https://github.com/resultakak/php-challenge/blob/develop/docs/Mock_API.postman_collection.json)
-
-## Folder Structure
-
-```
-app
-├── build
-├── docs
-├── logs
-├── sql
-├── src
-│   └── api                     ── Phalcon
-│   ├── mock                    ── Phalcon
-│   └── worker                  ── Laravel
-├── docker-compose.yml
-├── example.env
-├── install.sh
-├── Makefile
-├── README.md
-└── setup.md                    
-```
 
 See [Documentation](https://resul.me/php-challenge/).
