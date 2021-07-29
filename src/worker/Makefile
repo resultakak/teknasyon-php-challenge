@@ -5,6 +5,9 @@ setup: install migrate seed
 install:
 	composer install
 
+prod-install:
+	composer install --optimize-autoloader --no-dev
+
 migrate:
 	vendor/bin/phinx migrate
 
