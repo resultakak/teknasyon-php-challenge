@@ -9,7 +9,7 @@ stop:
 	docker-compose down
 
 restart:
-	docker-compose down; docker-compose up --build --remove-orphans
+	docker-compose down; docker-compose up -d --build --remove-orphans
 
 logs:
 	docker-compose logs -f
@@ -25,6 +25,9 @@ api-bash:
 
 mock-bash:
 	docker-compose exec mock bash
+
+worker-cron:
+	docker-compose exec worker php artisan schedule:run
 
 mysql-dump:
 	docker-compose exec db mysqldump -uroot -ppassword --no-data example_app > sql/db.sql
