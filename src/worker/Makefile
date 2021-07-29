@@ -1,6 +1,5 @@
 
-setup: install migrate seed
-
+setup: install migrate seed cron
 
 install:
 	composer install
@@ -9,10 +8,13 @@ prod-install:
 	composer install --optimize-autoloader --no-dev
 
 migrate:
-	vendor/bin/phinx migrate
+	php artisan migrate
 
 seed:
-	vendor/bin/phinx seed:run
+	php artisan db:seed
+
+cron:
+	php artisan schedule:run
 
 phinx-init:
 	phinx init
