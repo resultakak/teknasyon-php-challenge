@@ -15,6 +15,8 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 * Docker `20.10.7`
 * Docker Compose `1.29.2`
 
+> Docker Total Size (6 Images) 1.12 GB
+
 ### Add to hosts file:
 
 ```shell
