@@ -14,7 +14,7 @@ Content-Type: application/json
     "uid": "<UID>",
     "app_id": "<APPID>",
     "language":"<LANG>",
-    "os": "<IOS|ANDROID>"
+    "platform": "<IOS|ANDROID>"
 }
 ```
 

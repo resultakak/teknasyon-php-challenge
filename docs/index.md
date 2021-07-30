@@ -28,3 +28,7 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 * [Management API](https://api-teknasyon.resul.me/)
 * [Market Mock API](https://mock-teknasyon.resul.me/mock)
+
+### Others
+
+* [UML Diagrams](#uml.drawio)
