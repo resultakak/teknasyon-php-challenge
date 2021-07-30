@@ -25,13 +25,13 @@ final class DeviceApps extends AbstractMigration
                 'did',
                 'devices',
                 'did',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+                ['update' => 'NO_ACTION']
             )
             ->addForeignKey(
                 'aid',
                 'apps',
                 'aid',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+                ['update' => 'NO_ACTION']
             )
             ->create();
     }
