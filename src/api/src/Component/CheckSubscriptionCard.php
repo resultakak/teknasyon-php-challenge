@@ -9,12 +9,22 @@ use JsonSerializable;
 class CheckSubscriptionCard implements CardInterface, JsonSerializable
 {
     /**
-     * @var $status
+     * @var string $status
      */
     private $status;
 
     /**
-     * @var $expire_date
+     * @var string $status_text
+     */
+    private $status_text;
+
+    /**
+     * @var string $receipt
+     */
+    private $receipt;
+
+    /**
+     * @var string $expire_date
      */
     private $expire_date;
 
@@ -31,8 +41,16 @@ class CheckSubscriptionCard implements CardInterface, JsonSerializable
             return;
         }
 
+        if (array_key_exists('receipt', $data)) {
+            $this->setReceipt($data['receipt']);
+        }
+
         if (array_key_exists('status', $data)) {
             $this->setStatus((bool) $data['status']);
+        }
+
+        if (array_key_exists('status_text', $data)) {
+            $this->setStatusText($data['status_text']);
         }
 
         if (array_key_exists('expire_date', $data)) {
@@ -60,6 +78,44 @@ class CheckSubscriptionCard implements CardInterface, JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getStatusText(): string
+    {
+        return $this->status_text;
+    }
+
+    /**
+     * @param string $status_text
+     * @return $this
+     */
+    public function setStatusText(string $status_text): self
+    {
+        $this->status_text = $status_text;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReceipt(): string
+    {
+        return $this->receipt;
+    }
+
+    /**
+     * @param string $receipt
+     * @return $this
+     */
+    public function setReceipt(string $receipt): self
+    {
+        $this->receipt = $receipt;
+
+        return $this;
+    }
+
+    /**
      * @return mixed
      */
     public function getExpireDate()
@@ -81,7 +137,9 @@ class CheckSubscriptionCard implements CardInterface, JsonSerializable
     public function jsonSerialize()
     {
         $data = [
-            'status' => $this->hasStatus(),
+            'receipt'   => $this->getReceipt(),
+            'is_active' => $this->hasStatus(),
+            'status'    => $this->getStatusText(),
         ];
 
         if (true === $this->hasStatus()) {
