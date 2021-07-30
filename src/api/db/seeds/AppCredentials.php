@@ -7,6 +7,13 @@ class AppCredentials extends AbstractSeed
 {
     use CryptoTrait;
 
+    public function getDependencies()
+    {
+        return [
+            'Apps'
+        ];
+    }
+
     public function run()
     {
         $password = $this->encrypt(getenv('TEST_PASSWORD'));

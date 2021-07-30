@@ -4,6 +4,14 @@ use Phinx\Seed\AbstractSeed;
 
 class DeviceApps extends AbstractSeed
 {
+    public function getDependencies()
+    {
+        return [
+            'Apps',
+            'Devices'
+        ];
+    }
+
     public function run()
     {
         $faker = Faker\Factory::create();
