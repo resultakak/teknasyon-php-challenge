@@ -205,7 +205,7 @@ class Mock
     }
 
     /**
-     * @return array
+     * @return \Api\Mock\MockResultCard
      */
     public function getResult(): MockResultCard
     {
