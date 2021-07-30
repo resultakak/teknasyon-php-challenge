@@ -7,6 +7,8 @@ namespace Api\Mock;
 use Api\Component\CardInterface;
 use JsonSerializable;
 
+use function strtotime;
+
 class MockResultCard implements CardInterface, JsonSerializable
 {
     /**
@@ -54,7 +56,7 @@ class MockResultCard implements CardInterface, JsonSerializable
     {
         $data = [
             'receipt' => $this->getReceipt(),
-            'status'  => $this->hasStatus(),
+            'is_active'  => $this->hasStatus(),
         ];
 
         if (true === $this->hasStatus()) {
@@ -116,7 +118,8 @@ class MockResultCard implements CardInterface, JsonSerializable
      */
     public function setExpireDate($expire_date): self
     {
-        $this->expire_date = isset($expire_date) ? date('Y-m-d H:i:s', strtotime($expire_date)) : null;
+        $expire_date = isset($expire_date) ? strtotime($expire_date) : 0;
+        $this->expire_date = date('Y-m-d H:i:s', $expire_date);
 
         return $this;
     }
