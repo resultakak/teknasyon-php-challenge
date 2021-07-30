@@ -45,6 +45,29 @@ docker-compose exec mock make setup
 docker-compose exec worker make setup
 ```
 
+## Uninstall
+
+```shell
+curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/remove.sh | bash
+```
+
+or
+
+```shell
+docker-compose down
+docker system prune -a --volumes
+rm ./src/api/logs/*.log
+rm ./src/api/composer.lock
+rm -rf ./src/api/vendor
+rm ./src/mock/logs/*.log
+rm ./src/mock/composer.lock
+rm -rf ./src/mock/vendor
+rm ./src/worker/*.log
+rm ./src/worker/storage/logs/*.log
+rm -rf ./src/worker/vendor
+rm ./src/worker/composer.lock
+```
+
 ## Links
 
 * [Documentation](https://resul.me/php-challenge/)
