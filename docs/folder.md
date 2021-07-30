@@ -18,7 +18,8 @@ app
 ├── install.sh
 ├── Makefile
 ├── README.md
-└── setup.md                    
+├── remove.sh
+└── setup.sh                   
 ```
 
 ---
