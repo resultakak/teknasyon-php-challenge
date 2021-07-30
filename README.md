@@ -1,12 +1,12 @@
 Mobile Application Subscription Management
 ===
 
-Mobile applications are able to make in-app-purchase purchases, verification and current subscription control using this API.
+Mobile applications are able to make in-app-purchase purchases, verification and current subscription control using this
+API.
 
 See [Documentation](https://resul.me/php-challenge/).
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6f0afcfa224d41a09047f7857af08e7e)](https://app.codacy.com/gh/resultakak/php-challenge?utm_source=github.com&utm_medium=referral&utm_content=resultakak/php-challenge&utm_campaign=Badge_Grade_Settings)
-
 
 ```shell
 # Mock Live
@@ -34,7 +34,6 @@ curl -I https://api-teknasyon.resul.me/
 ```shell
 127.0.0.1	api.local
 127.0.0.1	mock.local
-127.0.0.1	worker.local
 ```
 
 ## Install
@@ -49,21 +48,26 @@ or
 git clone https://github.com/resultakak/php-challenge.git
 cd php-challenge
 cp example.env .env
+docker build -t resultakak/php:mavi ./build/php
 docker-compose up -d --build
-docker-compose exec api make setup
-docker-compose exec mock make setup
 docker-compose exec worker make setup
+docker-compose exec mock make setup
+docker-compose exec api make setup
+
 ```
 
 ## Uninstall
 
 ```shell
+
 curl -s https://raw.githubusercontent.com/resultakak/php-challenge/develop/remove.sh | bash
+
 ```
 
 or
 
 ```shell
+
 docker-compose down
 docker system prune -a --volumes
 rm ./src/api/logs/*.log
@@ -76,6 +80,8 @@ rm ./src/worker/*.log
 rm ./src/worker/storage/logs/*.log
 rm -rf ./src/worker/vendor
 rm ./src/worker/composer.lock
+rm -rf ./build/mysql/data/
+
 ```
 
 ## Links
@@ -83,4 +89,3 @@ rm ./src/worker/composer.lock
 * [Documentation](https://resul.me/php-challenge/)
 * [Mobile Application Subscription Managment API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/api#readme)
 * [Mock API (Readme)](https://github.com/resultakak/php-challenge/tree/develop/src/mock#readme)
-
