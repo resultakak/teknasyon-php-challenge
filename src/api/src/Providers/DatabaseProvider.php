@@ -24,7 +24,7 @@ class DatabaseProvider implements ServiceProviderInterface
 
                 $connection = new Mysql($options);
 
-                $connection->execute('SET NAMES utf8mb4', []);
+                $connection->execute('SET NAMES utf8mb4', []); // TODO: utf8mb4_unicode_ci
 
                 return $connection;
             }
