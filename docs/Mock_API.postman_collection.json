@@ -187,7 +187,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://mock.local/api/"
+			"value": "https://mock-teknasyon.resul.me/"
 		},
 		{
 			"key": "receipt_hash",

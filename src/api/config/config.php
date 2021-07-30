@@ -38,6 +38,6 @@ return [
         'index'             => 2
     ],
     'mock' => [
-        'url' => 'https://t-mock.resul.me/api/{platform}/receipt/verify'
+        'url' => 'https://mock-teknasyon.resul.me//api/{platform}/receipt/verify'
     ]
 ];

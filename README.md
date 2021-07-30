@@ -10,10 +10,10 @@ See [Documentation](https://resul.me/php-challenge/).
 
 ```shell
 # Mock Live
-curl -I https://api-teknasyon.resul.me/
+curl -I https://mock-teknasyon.resul.me/
 
 # API Live
-curl -I https://mock-teknasyon.resul.me/
+curl -I https://api-teknasyon.resul.me/
 
 ```
 

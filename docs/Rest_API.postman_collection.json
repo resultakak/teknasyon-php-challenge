@@ -56,7 +56,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"uid\": \"{{uid}}\",\n    \"app_id\": \"{{app_id}}\",\n    \"language\":\"{{language}}\",\n    \"os\": \"{{os}}\"\n}",
+					"raw": "{\n    \"uid\": \"{{uid}}\",\n    \"app_id\": \"{{app_id}}\",\n    \"language\":\"{{language}}\",\n    \"platform\": \"{{platform}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -193,7 +193,7 @@
 	"variable": [
 		{
 			"key": "url",
-			"value": "http://api.local/"
+			"value": "https://api-teknasyon.resul.me/"
 		},
 		{
 			"key": "uid",
@@ -208,8 +208,8 @@
 			"value": "en"
 		},
 		{
-			"key": "os",
-			"value": "iOS"
+			"key": "platform",
+			"value": "IOS"
 		},
 		{
 			"key": "token",
