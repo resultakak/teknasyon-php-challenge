@@ -108,7 +108,6 @@ services:
             SERVICE_TAGS: dev
             SERVICE_NAME: mysql
         volumes:
-            - ./build/mysql/docker:/docker-entrypoint-initdb.d
             - ./build/mysql/data:/var/lib/mysql
         ports:
             - "3306:3306"

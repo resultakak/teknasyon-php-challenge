@@ -16,7 +16,7 @@ return [
         'seeds'      => '%%PHINX_CONFIG_DIR%%/db/seeds'
     ],
     'environments'  => [
-        'default_migration_table' => 'phinxlog',
+        'default_migration_table' => 'api_migrations',
         'default_environment'     => 'development',
         'production'              => $env,
         'development'             => $env,

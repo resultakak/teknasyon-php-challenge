@@ -15,9 +15,9 @@ final class Subscriptions extends AbstractMigration
         }
 
         $table
-            ->addColumn('daid', 'integer', ['limit' => MysqlAdapter::INT_BIG])
-            ->addColumn('did', 'integer', ['limit' => MysqlAdapter::INT_BIG])
-            ->addColumn('aid', 'integer', ['limit' => MysqlAdapter::INT_BIG])
+            ->addColumn('daid', 'integer')
+            ->addColumn('did', 'integer')
+            ->addColumn('aid', 'integer')
             ->addColumn('receipt', 'string', ['limit' => 70])
             ->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'null' => true])
             ->addColumn('expire_date', 'datetime', ['null' => true])
@@ -32,24 +32,24 @@ final class Subscriptions extends AbstractMigration
             ->addIndex('receipt', [
                 'name' => 'sid_receipt'
             ])
+            ->create();
+
+        $table
             ->addForeignKey(
                 'daid',
                 'device_apps',
                 'daid',
-                ['update' => 'NO_ACTION', 'constraint' => 'subs_deapp_daid']
             )
             ->addForeignKey(
                 'did',
                 'devices',
                 'did',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION', 'constraint' => 'subs_device_did']
             )
             ->addForeignKey(
                 'aid',
                 'apps',
                 'aid',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION', 'constraint' => 'subs_app_aid']
             )
-            ->create();
+            ->save();
     }
 }

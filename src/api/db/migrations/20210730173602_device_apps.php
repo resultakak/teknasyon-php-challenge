@@ -1,7 +1,7 @@
 <?php
+
 declare(strict_types=1);
 
-use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 final class DeviceApps extends AbstractMigration
@@ -14,26 +14,28 @@ final class DeviceApps extends AbstractMigration
         }
 
         $table
-            ->addColumn('did', 'integer', ['limit' => MysqlAdapter::INT_BIG])
-            ->addColumn('aid', 'integer', ['limit' => MysqlAdapter::INT_BIG])
+            ->addColumn('did', 'integer')
+            ->addColumn('aid', 'integer')
             ->addColumn('token', 'string', ['limit' => 70])
             ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addIndex(['did', 'aid'], [
-                'unique' => true,
-                'name'   => 'daid_did_aid'
+                'name' => 'daid_did_aid'
             ])
+            ->create();
+
+        $table
             ->addForeignKey(
                 'did',
                 'devices',
                 'did',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+                ['update' => 'NO_ACTION', 'constraint' => 'deapp_device_did']
             )
             ->addForeignKey(
                 'aid',
                 'apps',
                 'aid',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+                ['update' => 'NO_ACTION', 'constraint' => 'deapp_app_aid']
             )
-            ->create();
+            ->save();
     }
 }

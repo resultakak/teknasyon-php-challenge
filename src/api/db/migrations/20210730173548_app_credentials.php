@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 final class AppCredentials extends AbstractMigration
@@ -14,7 +13,7 @@ final class AppCredentials extends AbstractMigration
         }
 
         $table
-            ->addColumn('aid', 'integer', ['limit' => MysqlAdapter::INT_BIG])
+            ->addColumn('aid', 'integer')
             ->addColumn('username', 'string', ['limit' => 70])
             ->addColumn('password', 'string', ['limit' => 70])
             ->addColumn('platform', 'enum', ['values' => ['IOS', 'ANDROID']])
@@ -23,12 +22,15 @@ final class AppCredentials extends AbstractMigration
                 'unique' => true,
                 'name'   => 'acid_aid'
             ])
+            ->create();
+
+        $table
             ->addForeignKey(
                 'aid',
                 'apps',
-                'aid',
-                ['update' => 'NO_ACTION']
+                'aid'
             )
-            ->create();
+            ->save();
+
     }
 }
