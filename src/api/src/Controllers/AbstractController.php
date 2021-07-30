@@ -41,7 +41,7 @@ abstract class AbstractController extends Controller
             throw new HttpException("Bad Request", $this->response::BAD_REQUEST);
         }
 
-        $cache_id = $this->cacheManager->cache_id([$card->getToken()], "token_");
+        $cache_id = $this->cacheManager->cache_id([$card->getToken()], "to_");
 
         $this->cacheManager->set($cache_id, [
             'token'      => $card->getToken(),
@@ -62,7 +62,7 @@ abstract class AbstractController extends Controller
             throw new HttpException("Bad Request", $this->response::BAD_REQUEST);
         }
 
-        $cache_id = $this->cacheManager->cache_id([$card->getToken()], "token_");
+        $cache_id = $this->cacheManager->cache_id([$card->getToken()], "to_");
 
         $cache = $this->cacheManager->get($cache_id);
 
