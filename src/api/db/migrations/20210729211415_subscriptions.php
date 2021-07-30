@@ -36,19 +36,19 @@ final class Subscriptions extends AbstractMigration
                 'daid',
                 'device_apps',
                 'daid',
-                ['update' => 'NO_ACTION']
+                ['update' => 'NO_ACTION', 'constraint' => 'subs_deapp_daid']
             )
             ->addForeignKey(
                 'did',
                 'devices',
                 'did',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION', 'constraint' => 'subs_device_did']
             )
             ->addForeignKey(
                 'aid',
                 'apps',
                 'aid',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION', 'constraint' => 'subs_app_aid']
             )
             ->create();
     }

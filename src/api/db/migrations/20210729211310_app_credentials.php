@@ -27,7 +27,7 @@ final class AppCredentials extends AbstractMigration
                 'aid',
                 'apps',
                 'aid',
-                ['update' => 'NO_ACTION']
+                ['update' => 'NO_ACTION', 'constraint' => 'credential_app_aid']
             )
             ->create();
     }
