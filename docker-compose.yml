@@ -38,6 +38,8 @@ services:
         restart: always
         volumes:
             - ./src/api:/var/www/api
+        depends_on:
+            - db
         working_dir: /var/www/api
         links:
             - db
@@ -55,6 +57,8 @@ services:
         restart: always
         volumes:
             - ./src/mock:/var/www/mock
+        depends_on:
+            - db
         working_dir: /var/www/mock
         links:
             - memcached:memcached
@@ -70,9 +74,11 @@ services:
         restart: always
         volumes:
             - ./src/worker:/var/www/worker
+        depends_on:
+            - db
+        working_dir: /var/www/worker
         networks:
             - public
-        working_dir: /var/www/worker
         links:
             - db
             - redis
