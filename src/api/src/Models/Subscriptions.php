@@ -99,7 +99,7 @@ class Subscriptions extends Model
             $this->event = 'canceled';
         }
 
-        if(true === is_null($this->expire_date)) {
+        if (true === is_null($this->expire_date)) {
             $this->expire_date = date('Y-m-d H:is', 0);
         }
     }
