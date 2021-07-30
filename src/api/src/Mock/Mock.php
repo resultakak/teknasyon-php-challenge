@@ -17,31 +17,28 @@ class Mock
     /**
      * @var $url
      */
-    private $url;
+    private string $url;
 
     /**
      * @var $platform
      */
-    private $platform;
+    private string $platform;
 
     /**
      * @var $username
      */
-    private $username;
+    private string $username;
 
     /**
      * @var $password
      */
-    private $password;
+    private string $password;
 
     /**
-     * @var $post
+     * @var mixed $post
      */
     private $post;
 
-    /**
-     * @var $result
-     */
     private $result;
 
     public function __construct(array $options = null)
@@ -204,10 +201,7 @@ class Mock
         return $this;
     }
 
-    /**
-     * @return \Api\Mock\MockResultCard
-     */
-    public function getResult(): MockResultCard
+    public function getResult()
     {
         return $this->result;
     }
