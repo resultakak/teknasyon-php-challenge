@@ -7,6 +7,7 @@ namespace Api\Models;
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Behavior\Timestampable;
 use Phalcon\Validation;
+use Phalcon\Validation\Validator\InclusionIn;
 use Phalcon\Validation\Validator\StringLength;
 
 /**
@@ -18,14 +19,14 @@ use Phalcon\Validation\Validator\StringLength;
 class Devices extends Model
 {
     /**
+     * @var integer $did
+     */
+    public $did;
+
+    /**
      * @var string $uid
      */
     public $uid;
-
-    /**
-     * @var string $app_id
-     */
-    public $app_id;
 
     /**
      * @var string $language
@@ -33,9 +34,9 @@ class Devices extends Model
     public $language;
 
     /**
-     * @var string $token
+     * @var string $platform
      */
-    public $token;
+    public $platform;
 
     /**
      * @var string $created
@@ -45,6 +46,16 @@ class Devices extends Model
     public function initialize(): void
     {
         $this->setSource('devices');
+
+        $this->hasMany(
+            'did',
+            DeviceApps::class,
+            'did',
+            [
+                'reusable' => true,
+                'alias'    => 'app'
+            ]
+        );
 
         $this->addBehavior(
             new Timestampable(
@@ -63,56 +74,62 @@ class Devices extends Model
         $validator = new Validation();
 
         $validator->add(
+            "language",
+            new InclusionIn(
+                [
+                    "message" => "The language must be ISO 639-1 Language Code",
+                    "domain"  => ["en", "de", "es", "ru", "zh", "tr", "fr", "da", "nl"],
+                ]
+            )
+        );
+
+        $validator->add(
+            "platform",
+            new InclusionIn(
+                [
+                    "message" => "The platform must be IOS or ANDROID",
+                    "domain"  => ["IOS", "ANDROID"],
+                ]
+            )
+        );
+
+        $validator->add(
             [
                 "uid",
-                "app_id",
                 "language",
-                "os",
-                "token",
+                "platform"
             ],
             new StringLength(
                 [
                     "max"             => [
-                        "uid"      => 60,
-                        "app_id"   => 60,
-                        "language" => 10,
-                        "os"       => 30,
-                        "token"    => 35,
+                        "uid"      => 70,
+                        "language" => 3,
+                        "platform" => 20,
                     ],
                     "min"             => [
                         "uid"      => 20,
-                        "app_id"   => 20,
                         "language" => 1,
-                        "os"       => 3,
-                        "token"    => 30,
+                        "platform" => 3
                     ],
                     "messageMaximum"  => [
                         "uid"      => "Uid too long",
-                        "app_id"   => "AppID too long",
                         "language" => "Language code too long",
-                        "os"       => "OS name too long",
-                        "token"    => "Internal Server Error",
+                        "platform" => "OS name too long"
                     ],
                     "messageMinimum"  => [
                         "uid"      => "Uid too short",
-                        "app_id"   => "AppID too short",
                         "language" => "Language code too short",
-                        "os"       => "OS name too short",
-                        "token"    => "Internal Server Error",
+                        "platform" => "OS name too short"
                     ],
                     "includedMaximum" => [
                         "uid"      => false,
-                        "app_id"   => true,
-                        "language" => false,
-                        "os"       => false,
-                        "token"    => false,
+                        "language" => true,
+                        "platform" => false
                     ],
                     "includedMinimum" => [
                         "uid"      => false,
-                        "app_id"   => true,
-                        "language" => false,
-                        "os"       => false,
-                        "token"    => false,
+                        "language" => true,
+                        "platform" => false
                     ]
                 ]
             )
