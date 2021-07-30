@@ -13,27 +13,18 @@ class Apps extends AbstractSeed
 
         $data = [
             [
-                'id'       => 1,
+                'aid'       => 1,
                 'app_id'   => md5('App 1'),
-                'username' => 'app_one',
-                'password' => $password,
-                'name'     => 'App 1',
                 'created'  => date('Y-m-d H:i:s')
             ],
             [
-                'id'       => 2,
+                'aid'       => 2,
                 'app_id'   => md5('App 2'),
-                'username' => 'app_two',
-                'password' => $password,
-                'name'     => 'App 2',
                 'created'  => date('Y-m-d H:i:s')
             ],
             [
-                'id'       => 3,
+                'aid'       => 3,
                 'app_id'   => md5('App 3'),
-                'username' => 'app_three',
-                'password' => $password,
-                'name'     => 'App 3',
                 'created'  => date('Y-m-d H:i:s')
             ]
         ];
