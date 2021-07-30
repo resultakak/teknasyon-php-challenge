@@ -6,10 +6,11 @@ namespace Api\Component;
 
 use Api\Traits\SerializeTrait;
 use JsonSerializable;
+
+use function json_decode;
+use function json_encode;
 use function md5;
 use function sha1;
-use function json_encode;
-use function json_decode;
 
 class RegisterCard implements JsonSerializable, CardInterface
 {
@@ -31,9 +32,9 @@ class RegisterCard implements JsonSerializable, CardInterface
     protected $language;
 
     /**
-     * @var $_os
+     * @var $platform
      */
-    protected $_os;
+    protected $platform;
 
     /**
      * @var $created
@@ -70,8 +71,8 @@ class RegisterCard implements JsonSerializable, CardInterface
             $this->setLanguage($data['language']);
         }
 
-        if (array_key_exists('os', $data)) {
-            $this->setOs($data['os']);
+        if (array_key_exists('platform', $data)) {
+            $this->setPlatform($data['platform']);
         }
 
         if (array_key_exists('created', $data)) {
@@ -134,17 +135,17 @@ class RegisterCard implements JsonSerializable, CardInterface
     /**
      * @return string
      */
-    public function getOs(): string
+    public function getPlatform(): string
     {
-        return $this->_os;
+        return $this->platform;
     }
 
     /**
-     * @param string $_os
+     * @param string $platform
      */
-    public function setOs(string $_os): void
+    public function setPlatform(string $platform): void
     {
-        $this->_os = $_os;
+        $this->platform = $platform;
     }
 
     /**
@@ -193,7 +194,7 @@ class RegisterCard implements JsonSerializable, CardInterface
         return [
             'uid'    => $this->getUid(),
             'app_id' => $this->getAppId(),
-            'token' => $this->getToken(),
+            'token'  => $this->getToken(),
         ];
     }
 }
