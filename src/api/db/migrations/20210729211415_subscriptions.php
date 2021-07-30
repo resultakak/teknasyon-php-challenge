@@ -36,7 +36,7 @@ final class Subscriptions extends AbstractMigration
                 'daid',
                 'device_apps',
                 'daid',
-                ['delete' => 'SET_NULL', 'update' => 'NO_ACTION']
+                ['update' => 'NO_ACTION']
             )
             ->addForeignKey(
                 'did',
