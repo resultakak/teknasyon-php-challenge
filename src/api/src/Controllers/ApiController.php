@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Api\Controllers;
 
-use Api\Component\CheckSubscriptionCard;
 use Api\Component\PurchaseCard;
 use Api\Component\RegisterCard;
+use Api\Component\SubscriptionResultCard;
 use Api\Http\Request;
 use Api\Http\Response;
-use Api\Mock\MockResultCard;
+use Api\Mock\Mock;
+use Api\Models\AppCredentials;
 use Api\Models\Applications;
+use Api\Models\DeviceApps;
 use Api\Models\Devices;
 use Api\Models\Subscriptions;
 use Api\Traits\CryptoTrait;
@@ -32,9 +34,9 @@ class ApiController extends AbstractController
     use CryptoTrait;
 
     /**
-     * @return Response
+     * @return Response|void
      */
-    public function register(): Response
+    public function register()
     {
         try {
             $postData = $this->request->getJsonRawBody();
@@ -44,7 +46,7 @@ class ApiController extends AbstractController
                     'uid'      => $this->clean($postData->uid),
                     'app_id'   => $this->clean($postData->app_id),
                     'language' => $this->clean($postData->language),
-                    'os'       => $this->clean($postData->os),
+                    'platform' => $this->clean($postData->platform),
                 ]
             );
 
@@ -59,31 +61,29 @@ class ApiController extends AbstractController
                     'conditions' => 'app_id = :app_id:',
                     'bind'       => [
                         'app_id' => $card->getAppId()
-                    ],
+                    ]
                 ]
             );
 
-            if (! isset($app) || empty($app)) {
-                throw new HttpException("Not Found", $this->response::NOT_FOUND);
+            if (true === is_null($app)) {
+                throw new HttpException("Application Not Found", $this->response::NOT_FOUND);
             }
 
             $device = Devices::findFirst(
                 [
-                    'conditions' => 'uid = :uid: AND app_id = :app_id:',
+                    'conditions' => 'uid = :uid:',
                     'bind'       => [
-                        'uid'    => $card->getUid(),
-                        'app_id' => $app->app_id,
+                        'uid' => $card->getUid()
                     ],
+                    'order'      => 'did desc',
                 ]
             );
 
-            if (! isset($device) || empty($device)) {
+            if (true === is_null($device)) {
                 $device = new Devices();
                 $device->uid = $card->getUid();
-                $device->app_id = $app->app_id;
                 $device->language = $card->getLanguage();
-                $device->os = $card->getOs();
-                $device->token = $card->getToken();
+                $device->platform = $card->getPlatform();
 
                 $result = $device->save();
 
@@ -95,10 +95,38 @@ class ApiController extends AbstractController
                 }
             }
 
+            $deviceApp = DeviceApps::findFirst(
+                [
+                    'conditions' => 'did = :did: AND aid = :aid:',
+                    'bind'       => [
+                        'did' => $device->did,
+                        'aid' => $app->aid
+                    ],
+                    'order'      => 'daid desc',
+                ]
+            );
+
+            if (true === is_null($deviceApp)) {
+                $deviceApp = new DeviceApps();
+
+                $deviceApp->did = $device->did;
+                $deviceApp->aid = $app->aid;
+                $deviceApp->token = $card->getToken();
+
+                $result = $deviceApp->save();
+
+                if (false === $result) {
+                    $messages = $deviceApp->getMessages();
+                    return $this->response
+                        ->setPayloadErrors($messages)
+                        ->setStatusCode($this->response::BAD_REQUEST);
+                }
+            }
+
             $this->set_token_cache($card);
 
             return $this->response
-                ->setPayloadSuccess(['data' => ['token' => $device->token]])
+                ->setPayloadSuccess(['data' => ['token' => $deviceApp->token]])
                 ->setStatusCode($this->response::CREATED);
         } catch (HttpException $ex) {
             $this->halt(
@@ -110,9 +138,9 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @return Response
+     * @return Response|void
      */
-    public function purchase(): Response
+    public function purchase()
     {
         try {
             $token = $this->request->getBearerTokenFromHeader();
@@ -129,23 +157,20 @@ class ApiController extends AbstractController
                 ]
             );
 
-            $cache_id = $this->cacheManager->cache_id(
-                [
-                    $token,
-                    $card->getReceipt()
-                ],
-                "purch_"
-            );
+            $cache_id = $this->cacheManager->cache_id([$token], "subs_");
 
             $cache = $this->cacheManager->get($cache_id);
 
             if (false !== $cache) {
-                return $this->response
-                    ->setPayloadSuccess(['data' => new MockResultCard($cache)])
-                    ->setStatusCode($this->response::OK);
+                if (true === isset($cache['receipt']) && $cache['receipt'] === $card->getReceipt()) {
+                    return $this->response
+                        ->setPayloadSuccess(['data' => $cache])
+                        ->setStatusCode($this->response::OK);
+                }
             }
 
-            $device = Devices::findFirst(
+            /** @var DeviceApps $deviceApp */
+            $deviceApp = DeviceApps::findFirst(
                 [
                     'conditions' => 'token = :token:',
                     'bind'       => [
@@ -154,58 +179,91 @@ class ApiController extends AbstractController
                 ]
             );
 
-            if (empty($device->app_id)) {
+            if (true === is_null($deviceApp)) {
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
             }
 
-            $app = Applications::findFirst(
+            /** @var AppCredentials $appCredential */
+            $appCredential = AppCredentials::findFirst(
                 [
-                    'conditions' => 'app_id = :app_id:',
+                    'conditions' => 'aid = :aid:',
                     'bind'       => [
-                        'app_id' => $device->app_id
+                        'aid' => $deviceApp->aid
                     ],
                 ]
             );
 
-            $password = $this->decrypt($app->password);
+            if (true === is_null($appCredential)) {
+                throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
+            }
 
+            $password = $this->decrypt($appCredential->password);
+
+            /** @var Mock $mock */
             $mock = $this->mock
                 ->setPlatform($this->mock::IOS)
-                ->setUsername($app->username)
+                ->setUsername($appCredential->username)
                 ->setPassword($password)
                 ->setPost(["receipt" => $card->getReceipt()])
                 ->handle();
 
-            /** @var MockResultCard $result */
             $result = $mock->getResult();
 
-            $subscriptions = new Subscriptions();
+            if (true === is_null($result)) {
+                throw new HttpException("Not Implemented", $this->response::NOT_IMPLEMENTED);
+            }
 
-            $subscriptions->device_id = $device->id;
-            $subscriptions->receipt = $result->getReceipt();
-            $subscriptions->status = $result->hasStatus();
-            $subscriptions->expire_date = $result->getExpireDate();
+            /** @var Subscriptions $subscriptions */
+            $subscriptions = Subscriptions::findFirst(
+                [
+                    'conditions' => 'daid = :daid:',
+                    'bind'       => [
+                        'daid' => $deviceApp->daid
+                    ],
+                    'order'      => 'sid desc'
+                ]
+            );
 
-            if (false === $subscriptions->save()) {
-                $messages = $subscriptions->getMessages();
-                foreach ($messages as $message) {
-                    $this->logger->error($message);
+            if (true === is_null($subscriptions)) {
+                $subscriptions = new Subscriptions();
+                $subscriptions->daid = $deviceApp->daid;
+                $subscriptions->did = $deviceApp->did;
+                $subscriptions->aid = $deviceApp->aid;
+                $subscriptions->receipt = $result->getReceipt();
+                $subscriptions->status = $result->hasStatus();
+                $subscriptions->expire_date = $result->getExpireDate();
+                $subscriptions->event = 'canceled';
+
+                if (false === $subscriptions->save()) {
+                    $messages = $subscriptions->getMessages();
+                    foreach ($messages as $message) {
+                        $this->logger->error($message);
+                    }
+                }
+            } else {
+                $subscriptions->receipt = $result->getReceipt();
+                $subscriptions->status = $result->hasStatus();
+                $subscriptions->expire_date = $result->getExpireDate();
+                $subscriptions->event = 'canceled';
+
+                if (false === $subscriptions->update()) {
+                    $messages = $subscriptions->getMessages();
+                    foreach ($messages as $message) {
+                        $this->logger->error($message);
+                    }
                 }
             }
 
-            $device->status = $result->hasStatus();
-            $device->expire_date = $result->getExpireDate();
+            $result = new SubscriptionResultCard(
+                [
+                    'receipt'     => $subscriptions->receipt,
+                    'status'      => $subscriptions->status,
+                    'status_text' => $subscriptions->event,
+                    'expire_date' => $subscriptions->expire_date,
+                ]
+            );
 
-            if (false === $device->update()) {
-                $messages = $device->getMessages();
-                foreach ($messages as $message) {
-                    $this->logger->error($message);
-                }
-            }
-
-            if (true === $result->hasStatus()) {
-                $this->cacheManager->set($cache_id, $result);
-            }
+            $this->cacheManager->set($cache_id, $result);
 
             return $this->response
                 ->setPayloadSuccess(['data' => $result])
@@ -220,9 +278,9 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @return Response
+     * @return Response|void
      */
-    public function check_subscription(): Response
+    public function check_subscription()
     {
         try {
             $token = $this->request->getBearerTokenFromHeader();
@@ -231,12 +289,7 @@ class ApiController extends AbstractController
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
             }
 
-            $cache_id = $this->cacheManager->cache_id(
-                [
-                    $token
-                ],
-                "subs_"
-            );
+            $cache_id = $this->cacheManager->cache_id([$token], "subs_");
 
             $cache = $this->cacheManager->get($cache_id);
 
@@ -246,7 +299,8 @@ class ApiController extends AbstractController
                     ->setStatusCode($this->response::OK);
             }
 
-            $device = Devices::findFirst(
+            /** @var DeviceApps $deviceApp */
+            $deviceApp = DeviceApps::findFirst(
                 [
                     'conditions' => 'token = :token:',
                     'bind'       => [
@@ -255,14 +309,31 @@ class ApiController extends AbstractController
                 ]
             );
 
-            if (empty($device->token) || empty($device->app_id)) {
+            if (true === is_null($deviceApp)) {
                 throw new HttpException("Unauthorized", $this->response::UNAUTHORIZED);
             }
 
-            $result = new CheckSubscriptionCard(
+            /** @var Subscriptions $deviceApp */
+            $subscriptions = Subscriptions::findFirst(
                 [
-                    'status'      => $device->status,
-                    'expire_date' => $device->expire_date
+                    'conditions' => 'daid = :daid:',
+                    'bind'       => [
+                        'daid' => $deviceApp->daid
+                    ],
+                    'order'      => 'sid desc',
+                ]
+            );
+
+            if (true === is_null($subscriptions)) {
+                throw new HttpException("Not Found", $this->response::NOT_FOUND);
+            }
+
+            $result = new SubscriptionResultCard(
+                [
+                    'receipt'     => $subscriptions->receipt,
+                    'status'      => $subscriptions->status,
+                    'status_text' => $subscriptions->event,
+                    'expire_date' => $subscriptions->expire_date,
                 ]
             );
 
