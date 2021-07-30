@@ -9,6 +9,7 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 ### General
 
+* [Get Started](started)
 * [Install](install)
 * [Folder Structure](folder)
 * [SQL Structure](sql)
@@ -22,3 +23,8 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 * [Mobile Application Subscription Managment API (with Tests)](Rest_API.postman_collection.json)
 * [Mock API (with Tests)](Mock_API.postman_collection.json)
+
+### Live Endpoints
+
+* [Management API](https://api-teknasyon.resul.me/)
+* [Market Mock API](https://mock-teknasyon.resul.me/mock)
