@@ -20,9 +20,7 @@ class MockProvider implements ServiceProviderInterface
         $container->set('mock', function () use ($config) {
             $options = $config->get('mock')->toArray();
 
-            $mock = new Mock($options);
-
-            return $mock;
+            return new Mock($options);
         });
     }
 }

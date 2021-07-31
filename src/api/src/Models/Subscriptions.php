@@ -1,60 +1,57 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
 
 declare(strict_types=1);
 
 namespace Api\Models;
 
-use Phalcon\Mvc\Model;
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\InclusionIn;
-use Phalcon\Validation\Validator\StringLength;
+use Phalcon\{Mvc\Model, Validation, Validation\Validator\InclusionIn, Validation\Validator\StringLength};
 
 class Subscriptions extends Model
 {
     /**
      * @var integer $sid
      */
-    public $sid;
+    public int $sid;
 
     /**
      * @var integer $daid
      */
-    public $daid;
+    public int $daid;
 
     /**
      * @var integer $did
      */
-    public $did;
+    public int $did;
 
     /**
      * @var integer $aid
      */
-    public $aid;
+    public int $aid;
 
     /**
      * @var string $receipt
      */
-    public $receipt;
+    public string $receipt;
 
     /**
      * @var bool $status
      */
-    public $status;
+    public bool $status;
 
     /**
      * @var string $expire_date
      */
-    public $expire_date;
+    public string $expire_date;
 
     /**
      * @var string $event
      */
-    public $event;
+    public string $event;
 
     /**
      * @var string $created
      */
-    public $created;
+    public string $created;
 
     public function initialize(): void
     {
@@ -91,7 +88,7 @@ class Subscriptions extends Model
         );
     }
 
-    public function actionHanlde()
+    public function actionHanlde(): void
     {
         if (true === $this->status) {
             $this->event = 'started';
@@ -104,12 +101,12 @@ class Subscriptions extends Model
         }
     }
 
-    public function beforeSave()
+    public function beforeSave(): void
     {
         $this->actionHanlde();
     }
 
-    public function beforeUpdate()
+    public function beforeUpdate(): void
     {
         $this->actionHanlde();
     }

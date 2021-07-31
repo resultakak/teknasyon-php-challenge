@@ -1,12 +1,15 @@
-<?php
+<?php /** @noinspection PhpUndefinedClassInspection */
 
 declare(strict_types=1);
 
 namespace Api\Http;
 
-use Phalcon\Http\Response as PhResponse;
-use Phalcon\Http\ResponseInterface;
-use Phalcon\Messages\Messages;
+use Phalcon\{
+    Http\Response as PhResponse,
+    Http\ResponseInterface,
+    Messages\Messages
+};
+
 use function date;
 use function json_decode;
 use function sha1;
@@ -31,7 +34,7 @@ class Response extends PhResponse
     public const NOT_IMPLEMENTED       = 501;
     public const BAD_GATEWAY           = 502;
 
-    private $codes = [
+    private array $codes = [
         200 => 'OK',
         301 => 'Moved Permanently',
         302 => 'Found',
@@ -65,7 +68,7 @@ class Response extends PhResponse
         $hash      = sha1($timestamp . $content);
         $eTag      = sha1($content);
 
-        $content = json_decode($this->getContent(), true);
+        $content = json_decode($this->getContent(), true, 512, JSON_THROW_ON_ERROR);
         $jsonapi = [
             'jsonapi' => [
                 'version' => '1.0',
@@ -78,6 +81,7 @@ class Response extends PhResponse
             ]
         ];
 
+        /** @noinspection AdditionOperationOnArraysInspection */
         $data = $jsonapi + $content + $meta;
         $this
             ->setHeader('E-Tag', $eTag)

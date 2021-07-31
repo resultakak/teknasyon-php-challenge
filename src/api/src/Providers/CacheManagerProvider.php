@@ -18,9 +18,7 @@ class CacheManagerProvider implements ServiceProviderInterface
         $application = $container->getShared('application');
 
         $container->setShared('cacheManager', function () use ($application) {
-            $cacheManager = new Manager($application);
-
-            return $cacheManager;
+            return new Manager($application);
         });
     }
 }

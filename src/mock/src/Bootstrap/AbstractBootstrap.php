@@ -8,6 +8,7 @@ use Phalcon\Cli\Console;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Di\ServiceProviderInterface;
 use Phalcon\Mvc\Micro;
+
 use function microtime;
 
 abstract class AbstractBootstrap

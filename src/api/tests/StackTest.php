@@ -9,6 +9,7 @@ final class StackTest extends TestCase
     public function testPushAndPop() : void
     {
         $stack = [];
+        /** @noinspection PhpArrayIsAlwaysEmptyInspection */
         $this->assertSame(0, count($stack));
 
         array_push($stack, 'foo');

@@ -11,8 +11,6 @@ use Phalcon\Filter;
 use Phalcon\Filter\FilterFactory;
 use Phalcon\Mvc\Controller;
 
-use function json_decode;
-use function json_encode;
 use function str_replace;
 
 abstract class AbstractController extends Controller
@@ -30,17 +28,11 @@ abstract class AbstractController extends Controller
             Filters::FILTER_TRIM
         ]);
 
-        $text = str_replace([" ", "\n", "\t"], "", $text);
-
-        return $text;
+        return str_replace([" ", "\n", "\t"], "", $text);
     }
 
     protected function set_token_cache(CardInterface $card): void
     {
-        if (! $card instanceof CardInterface) {
-            throw new HttpException("Bad Request", $this->response::BAD_REQUEST);
-        }
-
         $cache_id = $this->cacheManager->cache_id([$card->getToken()], "to_");
 
         $this->cacheManager->set($cache_id, [

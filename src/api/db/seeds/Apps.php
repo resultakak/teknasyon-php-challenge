@@ -9,8 +9,6 @@ class Apps extends AbstractSeed
 
     public function run()
     {
-        $password = $this->encrypt(getenv('TEST_PASSWORD'));
-
         $data = [
             [
                 'aid'       => 1,

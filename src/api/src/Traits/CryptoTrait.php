@@ -17,7 +17,6 @@ trait CryptoTrait
      */
     protected function encrypt(string $text): string
     {
-        /** @var Crypt $crypt */
         $crypt = new Crypt();
         $key = $this->getKey();
 
@@ -38,7 +37,6 @@ trait CryptoTrait
      */
     protected function decrypt(string $encrypted)
     {
-        /** @var Crypt $crypt */
         $crypt = new Crypt();
         $key = $this->getKey();
 

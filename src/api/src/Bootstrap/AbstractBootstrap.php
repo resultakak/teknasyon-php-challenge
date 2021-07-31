@@ -12,29 +12,53 @@ use function microtime;
 
 abstract class AbstractBootstrap
 {
+    /**
+     * @var Micro $application
+     */
     protected $application;
 
+    /*
+     * @var FactoryDefault $container;
+     */
     protected $container;
 
-    protected $options = [];
+    /**
+     * @var array $options
+     */
+    protected array $options = [];
 
-    protected $providers = [];
+    /**
+     * @var array $providers
+     */
+    protected array $providers = [];
 
+    /**
+     * @return Micro
+     */
     public function getApplication()
     {
         return $this->application;
     }
 
+    /**
+     * @return mixed
+     */
     public function getContainer()
     {
         return $this->container;
     }
 
+    /**
+     * @return mixed
+     */
     public function getResponse()
     {
         return $this->container->getShared('response');
     }
 
+    /**
+     * @return mixed
+     */
     abstract public function run();
 
     /**

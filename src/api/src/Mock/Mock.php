@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Api\Mock;
 
-use Api\Mock\MockResultCard;
-
 use function base64_encode;
 
 class Mock
@@ -15,22 +13,22 @@ class Mock
     public const ANDROID = 'android';
 
     /**
-     * @var $url
+     * @var string $url
      */
     private string $url;
 
     /**
-     * @var $platform
+     * @var string $platform
      */
     private string $platform;
 
     /**
-     * @var $username
+     * @var string $username
      */
     private string $username;
 
     /**
-     * @var $password
+     * @var string $password
      */
     private string $password;
 
@@ -39,7 +37,10 @@ class Mock
      */
     private $post;
 
-    private $result;
+    /**
+     * @var MockResultCard
+     */
+    private MockResultCard $result;
 
     public function __construct(array $options = null)
     {
@@ -74,7 +75,7 @@ class Mock
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST  => 'POST',
-            CURLOPT_POSTFIELDS     => json_encode($this->getPost()),
+            CURLOPT_POSTFIELDS     => json_encode($this->getPost(), JSON_THROW_ON_ERROR),
             CURLOPT_HTTPHEADER     => array(
                 'Authorization: Basic ' . $this->getAuth(),
                 'Content-Type: application/json'
@@ -89,7 +90,7 @@ class Mock
             return false;
         }
 
-        $response = json_decode($response, true);
+        $response = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
 
         if (isset($response['data']) && ! empty($response['data'])) {
             $this->setResult($response['data']);
@@ -201,7 +202,10 @@ class Mock
         return $this;
     }
 
-    public function getResult()
+    /**
+     * @return MockResultCard
+     */
+    public function getResult(): MockResultCard
     {
         return $this->result;
     }
