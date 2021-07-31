@@ -109,8 +109,8 @@ class ApiController extends AbstractController
             if (true === is_null($deviceApp)) {
                 $deviceApp = new DeviceApps();
 
-                $deviceApp->did = $device->did;
-                $deviceApp->aid = $app->aid;
+                $deviceApp->did = (int) $device->did;
+                $deviceApp->aid = (int) $app->aid;
                 $deviceApp->token = $card->getToken();
 
                 $result = $deviceApp->save();

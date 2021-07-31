@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUndefinedClassInspection */
+<?php
+
+/** @noinspection PhpUndefinedClassInspection */
 
 declare(strict_types=1);
 
@@ -12,7 +14,6 @@ use function Api\Core\appPath;
 
 class Api extends AbstractBootstrap
 {
-
     /**
      * @return Micro|void
      *
