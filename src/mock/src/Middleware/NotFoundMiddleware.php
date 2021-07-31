@@ -24,6 +24,7 @@ class NotFoundMiddleware extends Injectable implements MiddlewareInterface
         return false;
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
     public function call(Micro $mock)
     {
         return true;

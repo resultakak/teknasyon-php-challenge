@@ -7,6 +7,7 @@ namespace App\Http;
 use Phalcon\Http\Response as PhResponse;
 use Phalcon\Http\ResponseInterface;
 use Phalcon\Messages\Messages;
+
 use function date;
 use function json_decode;
 use function sha1;
@@ -17,18 +18,31 @@ use function sha1;
 class Response extends PhResponse
 {
     public const OK                    = 200;
+
     public const CREATED               = 201;
+
     public const ACCEPTED              = 202;
+
     public const MOVED_PERMANENTLY     = 301;
+
     public const FOUND                 = 302;
+
     public const TEMPORARY_REDIRECT    = 307;
+
     public const PERMANENTLY_REDIRECT  = 308;
+
     public const BAD_REQUEST           = 400;
+
     public const UNAUTHORIZED          = 401;
+
     public const FORBIDDEN             = 403;
+
     public const NOT_FOUND             = 404;
+
     public const INTERNAL_SERVER_ERROR = 500;
+
     public const NOT_IMPLEMENTED       = 501;
+
     public const BAD_GATEWAY           = 502;
 
     private $codes = [
@@ -57,10 +71,10 @@ class Response extends PhResponse
 
     public function send(): ResponseInterface
     {
-        $content   = $this->getContent();
+        $content = $this->getContent();
         $timestamp = date('c');
-        $hash      = sha1($timestamp . $content);
-        $eTag      = sha1($content);
+        $hash = sha1($timestamp.$content);
+        $eTag = sha1($content);
 
         $content = json_decode($this->getContent(), true);
         $jsonapi = [
@@ -68,7 +82,7 @@ class Response extends PhResponse
                 'version' => '1.0',
             ],
         ];
-        $meta    = [
+        $meta = [
             'meta' => [
                 'timestamp' => $timestamp,
                 'hash'      => $hash,

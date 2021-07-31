@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Api\Exception\HttpException;
-use App\Http\Response;
 use App\Receipt\Receipt;
 use App\Traits\ResponseTrait;
 use DateTime;
 use DateTimeZone;
+use Exception;
 use Phalcon\Mvc\Controller;
 
 /**
@@ -25,7 +25,7 @@ class MockController extends Controller
     private Phalcon\Mvc\Micro $application;
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function ios(): void
     {
@@ -33,7 +33,8 @@ class MockController extends Controller
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
+     * @noinspection PhpInconsistentReturnPointsInspection
      */
     protected function _handle()
     {
@@ -79,7 +80,7 @@ class MockController extends Controller
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function android()
     {

@@ -19,6 +19,10 @@ class AuthenticationMiddleware implements MiddlewareInterface
     use PasswordTrait;
     use QueryTrait;
 
+    /**
+     * @param Micro $mock
+     * @return bool|void
+     */
     public function call(Micro $mock)
     {
         /** @var Request $request */
