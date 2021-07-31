@@ -7,37 +7,42 @@ class SubscriptionCard
     /**
      * @var int $sid
      */
-    public $sid;
+    public int $sid;
 
     /**
      * @var int $daid
      */
-    public $daid;
+    public int $daid;
 
     /**
      * @var string $receipt
      */
-    public $receipt;
+    public string $receipt;
 
     /**
      * @var string $expire_date
      */
-    public $expire_date;
+    public string $expire_date;
 
     /**
      * @var string $event
      */
-    public $event;
+    public string $event;
 
     /**
      * @var string $username
      */
-    private $username;
+    private string $username;
 
     /**
      * @var string $password
      */
-    private $password;
+    private string $password;
+
+    /**
+     * @var string $platform
+     */
+    private string $platform;
 
     /**
      * @return int
@@ -168,6 +173,25 @@ class SubscriptionCard
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlatform(): string
+    {
+        return $this->platform;
+    }
+
+    /**
+     * @param string $platform
+     * @return $this
+     */
+    public function setPlatform(string $platform): self
+    {
+        $this->platform = $platform === 'IOS' ? 'ios' : 'android';
 
         return $this;
     }
