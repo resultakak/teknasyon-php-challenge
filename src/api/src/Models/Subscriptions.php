@@ -6,7 +6,10 @@ declare(strict_types=1);
 
 namespace Api\Models;
 
-use Phalcon\{Mvc\Model, Validation, Validation\Validator\InclusionIn, Validation\Validator\StringLength};
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\InclusionIn;
+use Phalcon\Validation\Validator\StringLength;
 
 class Subscriptions extends Model
 {
