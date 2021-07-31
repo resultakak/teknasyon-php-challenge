@@ -12,4 +12,5 @@ rm ./src/worker/*.log
 rm ./src/worker/storage/logs/*.log
 rm -rf ./src/worker/vendor
 rm ./src/worker/composer.lock
+rm -rf ./log/nginx/*.log
 rm -rf ./build/mysql/data/

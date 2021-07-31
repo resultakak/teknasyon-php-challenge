@@ -8,4 +8,4 @@ use function App\Core\appPath;
 
 require __DIR__.'/functions.php';
 
-require appPath('/vendor/autoload.php');
+require appPath('vendor/autoload.php');

@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpUndefinedClassInspection */
+<?php
 
 declare(strict_types=1);
 
@@ -8,11 +8,6 @@ use Phalcon\{Mvc\Model, Validation, Validation\Validator\StringLength};
 
 class DeviceApps extends Model
 {
-    /**
-     * @var integer $daid
-     */
-    public int $daid;
-
     /**
      * @var integer $did
      */
@@ -29,9 +24,9 @@ class DeviceApps extends Model
     public string $token;
 
     /**
-     * @var string $created
+     * @var string|null $created
      */
-    public string $created;
+    public ?string $created;
 
     public function initialize(): void
     {
