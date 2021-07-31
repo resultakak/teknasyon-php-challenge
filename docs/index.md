@@ -19,6 +19,12 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 * [Mobile Application Subscription Managment API](api)
 * [Mock API](mock)
 
+### Diagrams
+
+* [Mobile Application Subscription Managment API](api-diagram.png)
+* [Mock API](mock-diagram.png)
+* [Worker](mock-diagram.png)
+
 ### Postman Collections
 
 * [Mobile Application Subscription Managment API (with Tests)](Rest_API.postman_collection.json)
@@ -31,4 +37,4 @@ Mobile applications are able to make in-app-purchase purchases, verification and
 
 ### Others
 
-* [UML Diagrams](#uml.drawio)
+* [UML User Case](#uml.drawio)
