@@ -6,11 +6,9 @@ declare(strict_types=1);
 
 namespace Api\Http;
 
-use Phalcon\{
-    Http\Response as PhResponse,
-    Http\ResponseInterface,
-    Messages\Messages
-};
+use Phalcon\Http\Response as PhResponse;
+use Phalcon\Http\ResponseInterface;
+use Phalcon\Messages\Messages;
 
 use function date;
 use function json_decode;

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Api\Models;
 
-use Phalcon\{Mvc\Model, Validation, Validation\Validator\StringLength};
+use Phalcon\Mvc\Model;
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\StringLength;
 
 class DeviceApps extends Model
 {
