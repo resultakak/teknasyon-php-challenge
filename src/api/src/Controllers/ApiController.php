@@ -108,10 +108,11 @@ class ApiController extends AbstractController
 
             if (true === is_null($deviceApp)) {
                 $deviceApp = new DeviceApps();
-
+                $deviceApp->daid = null;
                 $deviceApp->did = (int) $device->did;
                 $deviceApp->aid = (int) $app->aid;
                 $deviceApp->token = $card->getToken();
+                $deviceApp->created = null;
 
                 $result = $deviceApp->save();
 
@@ -226,6 +227,7 @@ class ApiController extends AbstractController
 
             if (true === is_null($subscriptions)) {
                 $subscriptions = new Subscriptions();
+                $subscriptions->sid = null;
                 $subscriptions->daid = $deviceApp->daid;
                 $subscriptions->did = $deviceApp->did;
                 $subscriptions->aid = $deviceApp->aid;
@@ -233,6 +235,7 @@ class ApiController extends AbstractController
                 $subscriptions->status = $result->hasStatus();
                 $subscriptions->expire_date = $result->getExpireDate();
                 $subscriptions->event = 'canceled';
+                $subscriptions->created = null;
 
                 if (false === $subscriptions->save()) {
                     $messages = $subscriptions->getMessages();

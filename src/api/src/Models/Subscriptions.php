@@ -14,9 +14,9 @@ use Phalcon\Validation\Validator\StringLength;
 class Subscriptions extends Model
 {
     /**
-     * @var integer $sid
+     * @var int|null $sid
      */
-    public int $sid;
+    public ?int $sid;
 
     /**
      * @var integer $daid
@@ -44,9 +44,9 @@ class Subscriptions extends Model
     public bool $status;
 
     /**
-     * @var string $expire_date
+     * @var string|null $expire_date
      */
-    public string $expire_date;
+    public ?string $expire_date;
 
     /**
      * @var string $event
@@ -54,9 +54,9 @@ class Subscriptions extends Model
     public string $event;
 
     /**
-     * @var string $created
+     * @var string|null $created
      */
-    public string $created;
+    public ?string $created;
 
     public function initialize(): void
     {

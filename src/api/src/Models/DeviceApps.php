@@ -11,6 +11,11 @@ use Phalcon\Validation\Validator\StringLength;
 class DeviceApps extends Model
 {
     /**
+     * @var int|null $daid
+     */
+    public ?int $daid;
+
+    /**
      * @var integer $did
      */
     public int $did;

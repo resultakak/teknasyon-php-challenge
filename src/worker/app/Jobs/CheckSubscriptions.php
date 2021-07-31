@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use _PHPStan_8f2e45ccf\Nette\Neon\Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -9,7 +10,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class CheckSubscriptions implements ShouldQueue
 {
@@ -28,7 +28,7 @@ class CheckSubscriptions implements ShouldQueue
     /**
      * @var SubscriptionCard $card
      */
-    public $card;
+    protected SubscriptionCard $card;
 
     /**
      * @param SubscriptionCard $card
@@ -45,17 +45,38 @@ class CheckSubscriptions implements ShouldQueue
      */
     public function handle()
     {
-        $password = \getenv('TEST_PASSWORD');
+        $authorization = 'Basic '.base64_encode($this->card->getUsername().':'.$this->card->getPassword());
 
-        $authorization = 'Basic '.\base64_encode($this->card->getUsername().':'.$password);
+        $url = str_replace("{platform}", $this->card->getPlatform(), env('MOCK_API_URL'));
 
         $response = Http::withHeaders(['Authorization' => $authorization])
             ->acceptJson()
-            ->post('https://t-mock.resul.me/api/ios/receipt/verify', ['receipt' => $this->card->getReceipt()])
+            ->post($url, ['receipt' => $this->card->getReceipt()])
             ->json();
 
-        if ( true === isset($response['data'])) {
-            Log::info($response['data']);
+        if (true === isset($response['data'])) {
+            $item = $response['data'];
+
+            if ($item['status'] === true) {
+                $item['event'] = 'renewed';
+            } else {
+                $item['event'] = 'canceled';
+                $item['expire_date'] = date('Y-m-d H:i:', 0);
+            }
+
+            $affected = DB::table('subscriptions')
+                ->where('sid', $this->card->getSid())
+                ->update(
+                    [
+                        'status' => $item['status'],
+                        'expire_date' => $item['expire_date'],
+                        'event' => $item['event']
+                    ]
+                );
+
+            if (false === $affected) {
+                throw new Exception("Failed: ".$item['receipt']);
+            }
         }
     }
 }

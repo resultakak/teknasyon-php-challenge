@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\CheckSubscriptions;
 use App\Jobs\SubscriptionCard;
 use DateTime;
 use DateTimeZone;
@@ -49,11 +50,13 @@ class GetExpiredSubscriptions extends Command
 
         $credentials = [];
         if($appCredentials) {
+            $password = getenv('TEST_PASSWORD');
             foreach ($appCredentials as $credential) {
                 $credentials[$credential->aid] = [
                     'aid' => $credential->aid,
                     'username' => $credential->username,
-                    'password' => $credential->password
+                    'password' => $password, //$credential->password,
+                    'platform' => $credential->platform,
                 ];
             }
         }
@@ -63,27 +66,34 @@ class GetExpiredSubscriptions extends Command
             ['event' => 'canceled', 'today' => $today]
         );
 
+        if(true !== is_array($result) || 0 === count($result)) {
+            return 0;
+        }
+
         if($result) {
             foreach ($result as $item) {
+                try
+                {
+                    $credential = true === isset($credentials[$item->aid]) ? $credentials[$item->aid] : false;
 
-                $credential = true === isset($credentials[$item->aid]) ? $credentials[$item->aid] : false;
+                    if (! isset($credential) || empty($credential)) {
+                        throw new \Exception("App credential not found. aid: {$item->aid} - sid: {$item->sid}");
+                    }
 
-                if (! isset($credential) || empty($credential)) {
-                    Log::error("App credential not found. App AID: {$item->aid}");
-                    continue;
+                    $card = (new SubscriptionCard())
+                        ->setSid($item->sid)
+                        ->setDaid($item->daid)
+                        ->setReceipt($item->receipt)
+                        ->setExpireDate($item->expire_date)
+                        ->setEvent($item->event)
+                        ->setUsername($credential['username'])
+                        ->setPassword($credential['password'])
+                        ->setPlatform($credential['platform']);
+
+                    CheckSubscriptions::dispatch($card);
+                } catch (\Exception $ex) {
+                    Log::error($ex->getMessage());
                 }
-
-                $card = (new SubscriptionCard())
-                    ->setSid($item->sid)
-                    ->setDaid($item->daid)
-                    ->setReceipt($item->receipt)
-                    ->setExpireDate($item->expire_date)
-                    ->setEvent($item->event)
-                    ->setUsername($credential['username'])
-                    ->setPassword($credential['password'])
-                    ;
-
-                \App\Jobs\CheckSubscriptions::dispatch($card);
             }
         }
 
